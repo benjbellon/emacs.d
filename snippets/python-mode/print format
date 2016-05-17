@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: print format
+# key: printf
+# --
+print("$1".format($0))

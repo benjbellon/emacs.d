@@ -27,6 +27,7 @@
      dash
      flycheck
      flycheck-clojure
+     flycheck-pos-tip
      highlight-escape-sequences
      ido-vertical-mode
      markdown-mode
@@ -47,10 +48,12 @@
   (require-package 'exec-path-from-shell)
   (exec-path-from-shell-initialize))
 
-(require 'setup-ido)
 (require 'setup-clojure-mode)
+(require 'setup-flycheck)
+(require 'setup-ido)
 (require 'setup-markdown-mode)
 (require 'setup-multiple-cursors)
+(require 'setup-yasnippet)
 
 (require 'visual-regexp)
 (define-key global-map (kbd "M-&") 'vr/query-replace)
