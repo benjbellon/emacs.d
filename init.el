@@ -27,7 +27,9 @@
      dash
      flycheck
      flycheck-clojure
+     flycheck-haskell
      flycheck-pos-tip
+     haskell-mode
      highlight-escape-sequences
      ido-vertical-mode
      markdown-mode
@@ -50,6 +52,7 @@
 
 (require 'setup-clojure-mode)
 (require 'setup-flycheck)
+(require 'setup-haskell-mode)
 (require 'setup-ido)
 (require 'setup-markdown-mode)
 (require 'setup-multiple-cursors)
