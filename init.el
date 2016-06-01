@@ -35,6 +35,7 @@
      markdown-mode
      multiple-cursors
      paredit
+     scala-mode
      visual-regexp
      yasnippet)))
 
