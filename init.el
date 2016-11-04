@@ -51,6 +51,7 @@
   (require-package 'exec-path-from-shell)
   (exec-path-from-shell-initialize))
 
+(require 'setup-c++-mode)
 (require 'setup-clojure-mode)
 (require 'setup-flycheck)
 (require 'setup-haskell-mode)
