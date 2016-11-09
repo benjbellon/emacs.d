@@ -25,6 +25,8 @@
      clojure-mode-extra-font-locking
      clojure-snippets
      dash
+     ember-mode
+     ensime
      flycheck
      flycheck-clojure
      flycheck-haskell
@@ -32,11 +34,15 @@
      haskell-mode
      highlight-escape-sequences
      ido-vertical-mode
+     js2-mode
+     magit
      markdown-mode
      multiple-cursors
      paredit
+     sbt-mode
      scala-mode
      visual-regexp
+     web-mode
      yasnippet)))
 
 (condition-case nil
@@ -51,13 +57,19 @@
   (require-package 'exec-path-from-shell)
   (exec-path-from-shell-initialize))
 
+(add-to-list 'exec-path "/usr/local/bin")
+
 (require 'setup-c++-mode)
 (require 'setup-clojure-mode)
+(require 'setup-ember-mode)
 (require 'setup-flycheck)
 (require 'setup-haskell-mode)
 (require 'setup-ido)
+(require 'setup-js-mode)
 (require 'setup-markdown-mode)
 (require 'setup-multiple-cursors)
+(require 'setup-scala-mode)
+(require 'setup-web-mode)
 (require 'setup-yasnippet)
 
 (require 'visual-regexp)
