@@ -34,7 +34,6 @@
      haskell-mode
      highlight-escape-sequences
      ido-vertical-mode
-     js2-mode
      magit
      markdown-mode
      multiple-cursors
@@ -43,6 +42,7 @@
      scala-mode
      visual-regexp
      web-mode
+     yaml-mode
      yasnippet)))
 
 (condition-case nil
@@ -65,11 +65,12 @@
 (require 'setup-flycheck)
 (require 'setup-haskell-mode)
 (require 'setup-ido)
-(require 'setup-js-mode)
+(require 'setup-magit)
 (require 'setup-markdown-mode)
 (require 'setup-multiple-cursors)
 (require 'setup-scala-mode)
 (require 'setup-web-mode)
+(require 'setup-yaml-mode)
 (require 'setup-yasnippet)
 
 (require 'visual-regexp)
