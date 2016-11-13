@@ -38,6 +38,7 @@
      markdown-mode
      multiple-cursors
      paredit
+     org-bullets
      sbt-mode
      scala-mode
      visual-regexp
@@ -68,6 +69,7 @@
 (require 'setup-magit)
 (require 'setup-markdown-mode)
 (require 'setup-multiple-cursors)
+(require 'setup-org-mode)
 (require 'setup-scala-mode)
 (require 'setup-web-mode)
 (require 'setup-yaml-mode)
