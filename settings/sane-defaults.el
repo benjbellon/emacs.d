@@ -61,8 +61,8 @@
 (setq enable-recursive-minibuffers t)
 
 ;; More memory than even Magnars...cause the future keeps happening
-;; 50 MB should be good
-(setq gc-cons-threshold 50000000)
+;; 100 MB should be good
+(setq gc-cons-threshold 100000000)
 
 ;; warn when opening files bigger than 100MB
 (setq large-file-warning-threshold 100000000)
@@ -88,5 +88,14 @@
       (make-directory parent-directory t))))
 
 (add-to-list 'find-file-not-found-functions 'my-create-non-existent-directory)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
+(prefer-coding-system 'utf-8)
 
 (provide 'sane-defaults)
