@@ -1,4 +1,11 @@
 ;; Suppress splash screen
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (setq inhibit-startup-message t)
 
 (setq settings-dir
@@ -25,6 +32,7 @@
      clojure-mode-extra-font-locking
      clojure-snippets
      dash
+     elm-mode
      ember-mode
      ensime
      flycheck
@@ -34,15 +42,18 @@
      haskell-mode
      highlight-escape-sequences
      ido-vertical-mode
-     js2-mode
      magit
      markdown-mode
      multiple-cursors
      paredit
+     play-routes-mode
+     purescript-mode
+     org-bullets
      sbt-mode
      scala-mode
      visual-regexp
      web-mode
+     yaml-mode
      yasnippet)))
 
 (condition-case nil
@@ -65,11 +76,14 @@
 (require 'setup-flycheck)
 (require 'setup-haskell-mode)
 (require 'setup-ido)
-(require 'setup-js-mode)
+(require 'setup-magit)
 (require 'setup-markdown-mode)
 (require 'setup-multiple-cursors)
+(require 'setup-org-mode)
+(require 'setup-purescript-mode)
 (require 'setup-scala-mode)
 (require 'setup-web-mode)
+(require 'setup-yaml-mode)
 (require 'setup-yasnippet)
 
 (require 'visual-regexp)
