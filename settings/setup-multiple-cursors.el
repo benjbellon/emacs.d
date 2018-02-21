@@ -1,5 +1,11 @@
-(global-set-key (kbd "C-c <C-up>") 'mc/edit-lines)
-(global-set-key (kbd "C-c <down>") 'mc/mark-all-like-this)
+(if (equal system-type 'darwin)
+    (progn
+      (global-set-key (kbd "C-c <up>") 'mc/edit-lines)
+      (global-set-key (kbd "C-c <down>" ) 'mc/mark-all-like-this))
+  (progn
+    (global-set-key (kbd "C-c <C-up>") 'mc/edit-lines)
+    (global-set-key (kbd "C-c <C-down>" ) 'mc/mark-all-like-this)))
+
 (global-set-key (kbd "C-c <C-right>") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-c <C-left>") 'mc/mark-previous-like-this)
 (global-set-key (kbd "M-s m") 'mc/mark-all-in-eval)
