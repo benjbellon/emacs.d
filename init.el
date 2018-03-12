@@ -1,11 +1,10 @@
-;; Suppress splash screen
-
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+;; Suppress splash screen
 (setq inhibit-startup-message t)
 
 (setq settings-dir
@@ -23,9 +22,14 @@
 ;; Are we on a mac?
 (setq is-mac (equal system-type 'darwin))
 
+;; Are we in gui or terminal?
+(if (display-graphic-p)
+    (load-theme 'solarized-dark))
+
+
 (require 'setup-package)
 
-(defun init--install-packages()
+(defun init-install-packages()
   (packages-install
    '(cider
      clojure-mode
@@ -57,10 +61,10 @@
      yasnippet)))
 
 (condition-case nil
-    (init--install-packages)
+    (init-install-packages)
   (error
    (package-refresh-contents)
-   (init--install-packages)))
+   (init-install-packages)))
 
 (require 'sane-defaults)
 
@@ -93,4 +97,5 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+
 ;;; init.el ends here
