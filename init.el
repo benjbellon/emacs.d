@@ -1,7 +1,3 @@
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
 (package-initialize)
 
 ;; Suppress splash screen
@@ -80,6 +76,7 @@
 (require 'setup-flycheck)
 (require 'setup-haskell-mode)
 (require 'setup-ido)
+(require 'setup-keychain-environment)
 (require 'setup-magit)
 (require 'setup-markdown-mode)
 (require 'setup-multiple-cursors)
@@ -98,4 +95,5 @@
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
+(keychain-refresh-environment)
 ;;; init.el ends here
