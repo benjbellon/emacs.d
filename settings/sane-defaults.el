@@ -12,7 +12,6 @@
 
 ;; define browsers
 (define-key global-map (kbd "C-x w") 'browse-url-emacs)
-(define-key global-map (kbd "C-x w") 'browse-url-emacs)
 (define-key global-map (kbd "C-x M-w") 'browse-url-chromium)
 
 ;; Also auto refresh dired, but be quiet about it
