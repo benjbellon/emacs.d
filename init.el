@@ -1,3 +1,27 @@
+;;; init.el --- initialize emacs configuration
+
+;;; Author: Benj Bellon <benjaminbellon@gmail.com>
+;;; Maintainer: Benj Bellon <benjaminbellon@gmail.com>
+;;; Homepage: https://github.com/benjbellon/emacs.d
+;;; Keywords: emacs, emacs.d, config
+
+;;; Commentary:
+
+;;; This config builds an instance of Emacs personalized for its author.
+;;; A few things of interest:
+;;; 1. C-x C-c is overriden in the GUI so it redirects to the default
+;;;    *ansi-term* buffer. If you wish for this override while using
+;;;    Emacs in terminal mode, provide the following ENV variable:
+;;;      EMACS_OVERRIDE_C_X_C_C
+;;;
+;;; 2. init.el calls keychain-refresh-environment. If for some reason,
+;;;    you do not wish for the following to be available to Emacs, add
+;;;    a comment or remove the call:
+;;;        SSH_AUTH_SOCK
+;;;        SSH_AGENT_PID
+;;;        GPG_AGENT_INFO
+;;;
+;;; Code:
 (package-initialize)
 
 ;; Suppress splash screen
@@ -70,6 +94,7 @@
 
 (add-to-list 'exec-path "/usr/local/bin")
 
+(require 'setup-auto-insert-mode)
 (require 'setup-c++-mode)
 (require 'setup-clojure-mode)
 (require 'setup-ember-mode)
