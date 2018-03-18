@@ -1,6 +1,6 @@
 (require 'yasnippet)
 
-(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+(setq yas-snippet-dirs `(,(locate-user-emacs-file "templates/snippets")))
 
 (yas-global-mode 1)
 ;; Jump to end of snippet definition

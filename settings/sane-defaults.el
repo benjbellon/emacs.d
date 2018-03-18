@@ -7,7 +7,7 @@
 ;; Auto refresh buffers
 (global-auto-revert-mode 1)
 
-;; setup eval elsip
+;; setup eval elisp
 (define-key global-map (kbd "C-x C-e") 'eval-last-sexp)
 
 ;; define browsers

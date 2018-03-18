@@ -5,7 +5,7 @@
   (yas-expand-snippet (buffer-string) (point-min) (point-max)))
 
 (custom-set-variables
- '(auto-insert-directory (locate-user-emacs-file "auto-insert")))
+ '(auto-insert-directory (locate-user-emacs-file "templates/auto-insert")))
 
 ;; Activate globally
 (auto-insert-mode)

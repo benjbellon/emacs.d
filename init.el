@@ -75,6 +75,7 @@
      org-bullets
      sbt-mode
      scala-mode
+     slime
      visual-regexp
      web-mode
      yaml-mode
@@ -102,12 +103,14 @@
 (require 'setup-haskell-mode)
 (require 'setup-ido)
 (require 'setup-keychain-environment)
+(require 'setup-lisp-mode)
 (require 'setup-magit)
 (require 'setup-markdown-mode)
 (require 'setup-multiple-cursors)
 (require 'setup-org-mode)
 (require 'setup-purescript-mode)
 (require 'setup-scala-mode)
+(require 'setup-slime-mode)
 (require 'setup-web-mode)
 (require 'setup-yaml-mode)
 (require 'setup-yasnippet)
