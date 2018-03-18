@@ -59,6 +59,7 @@
      elm-mode
      ember-mode
      ensime
+     find-file-in-project
      flycheck
      flycheck-clojure
      flycheck-haskell
@@ -99,6 +100,7 @@
 (require 'setup-c++-mode)
 (require 'setup-clojure-mode)
 (require 'setup-ember-mode)
+(require 'setup-find-file-in-project)
 (require 'setup-flycheck)
 (require 'setup-haskell-mode)
 (require 'setup-ido)
@@ -114,6 +116,7 @@
 (require 'setup-web-mode)
 (require 'setup-yaml-mode)
 (require 'setup-yasnippet)
+
 (require 'visual-regexp)
 (define-key global-map (kbd "M-&") 'vr/query-replace)
 (define-key global-map (kbd "M-/") 'vr/replace)
