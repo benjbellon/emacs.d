@@ -59,7 +59,6 @@
      elm-mode
      ember-mode
      ensime
-     find-file-in-project
      flycheck
      flycheck-clojure
      flycheck-haskell
@@ -72,6 +71,7 @@
      multiple-cursors
      paredit
      play-routes-mode
+     projectile
      purescript-mode
      org-bullets
      sbt-mode
@@ -100,7 +100,6 @@
 (require 'setup-c++-mode)
 (require 'setup-clojure-mode)
 (require 'setup-ember-mode)
-(require 'setup-find-file-in-project)
 (require 'setup-flycheck)
 (require 'setup-haskell-mode)
 (require 'setup-ido)
@@ -110,6 +109,7 @@
 (require 'setup-markdown-mode)
 (require 'setup-multiple-cursors)
 (require 'setup-org-mode)
+(require 'setup-projectile-mode)
 (require 'setup-purescript-mode)
 (require 'setup-scala-mode)
 (require 'setup-slime-mode)
