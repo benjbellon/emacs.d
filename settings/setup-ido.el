@@ -1,15 +1,13 @@
-;; Stolen from magnars
-;; https://github.com/magnars/.emacs.d/blob/master/settings/setup-ido.el
-
 (require 'ido)
+(require 'flx-ido)
 (ido-mode t)
-(setq ido-enable-prefix nil
-      ido-enable-flex-matching t
-      ido-case-fold nil
-      ido-auto-merge-work-directories-length -1
-      ido-create-new-buffer 'always
-      ido-use-filename-at-point nil
-      ido-max-prospects 10)
+(ido-everywhere t)
+(flx-ido-mode t)
+
+;; disable flex matching to use flx-ido
+(setq ido-disable-flex-matching t
+      ido-use-faces nil
+      ido-create-new-buffer 'always)
 
 (require 'ido-vertical-mode)
 (ido-vertical-mode)

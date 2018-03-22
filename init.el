@@ -59,6 +59,7 @@
      elm-mode
      ember-mode
      ensime
+     flx-ido
      flycheck
      flycheck-clojure
      flycheck-haskell
