@@ -51,7 +51,8 @@
 
 (defun init-install-packages()
   (packages-install
-   '(cider
+   '(ace-window
+     cider
      clojure-mode
      clojure-mode-extra-font-locking
      clojure-snippets
@@ -97,6 +98,7 @@
 
 (add-to-list 'exec-path "/usr/local/bin")
 
+(require 'setup-ace-window-mode)
 (require 'setup-auto-insert-mode)
 (require 'setup-c++-mode)
 (require 'setup-clojure-mode)
