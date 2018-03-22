@@ -100,6 +100,7 @@
 
 (require 'setup-ace-window-mode)
 (require 'setup-auto-insert-mode)
+(require 'setup-avy-mode)
 (require 'setup-c++-mode)
 (require 'setup-clojure-mode)
 (require 'setup-ember-mode)
