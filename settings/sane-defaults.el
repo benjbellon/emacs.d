@@ -1,4 +1,4 @@
-;; Stolen from Magnars, with small mods
+;; Stolen from Magnars, with mods
 ;; https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el
 
 ;; Allow pasting selection outside of Emacs
@@ -17,6 +17,9 @@
 ;; Also auto refresh dired, but be quiet about it
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
+
+;; dired listing switches
+(setq dired-listing-switches "-lisah")
 
 ;; Show keystrokes in progress
 (setq echo-keystrokes 0.1)
@@ -64,7 +67,7 @@
 ;; Allow recursive minibuffers
 (setq enable-recursive-minibuffers t)
 
-;; More memory than even Magnars...cause the future keeps happening
+;; More memory than even Magnars...'cause the future keeps happening
 ;; 100 MB should be good
 (setq gc-cons-threshold 100000000)
 
@@ -81,7 +84,6 @@
 (setq ediff-diff-options "-w")
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
 
 ;; Offer to create parent directories if they do not exist
 ;; http://iqbalansari.github.io/blog/2014/12/07/automatically-create-parent-directories-on-visiting-a-new-file-in-emacs/
@@ -102,4 +104,50 @@
 
 (prefer-coding-system 'utf-8)
 
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;; swap regexp search and regular search bindings
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s") 'isearch-forward)
+(global-set-key (kbd "C-M-r") 'isearch-backward)
+
+;; eval  mode in region buffer
+(global-set-key (kbd "C-c C-e") 'eval-last-sexp)
+
+;; undo should not need shift
+(global-set-key (kbd "C--") 'undo)
+
+;; compilation commands
+(global-set-key (kbd "C-x C-m C-c") 'compile)
+(global-set-key (kbd "C-x C-m C-m") 'recompile)
+
+
+;; copy/paste commands for linux
+(global-set-key (kbd "s-c") 'clipboard-kill-region)
+(global-set-key (kbd "s-v") 'clipboard-yank)
+
+(defun beautify-json ()
+  (interactive)
+  (let ((b (if mark-active (min (point) (mark)) (point-min)))
+	(e (if mark-active (max (point) (mark)) (point-max))))
+    (shell-command-on-region b e
+			     "python -mjson.tool" (current-buffer) t)))
+
+;; Override C-x C-c to open the default ansi-term buffer
+;; 0. check if we are in GUI or user want to override behavior
+;; 1. check if ansi-term buffer exists
+;; 2. load that buffer if it does exist
+;; 3. create and load that buffer if it does not, and delete other windows
+(if (display-graphic-p)
+    (let ((ansi-buffer "*ansi-term*")
+	  (quit-command "C-x C-c"))
+      (if (not (get-buffer ansi-buffer))
+	  (ansi-term "/bin/bash"))
+      (define-key global-map (kbd quit-command)
+	(lambda () (interactive)
+	  (delete-other-windows)
+	  (switch-to-buffer "*ansi-term*")))))
+
 (provide 'sane-defaults)
+;;; sane-defaults.el ends here

@@ -26,5 +26,7 @@
 
 (projectile-global-mode)
 
+(define-key projectile-command-map (kbd "s g") 'projectile-ripgrep)
+
 (provide 'setup-projectile-mode)
 ;;; setup-projectile-mode.el ends here

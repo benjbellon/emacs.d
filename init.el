@@ -44,6 +44,7 @@
 
 ;; Are we in gui or terminal?
 (if (display-graphic-p)
+    ;; load the theme so we don't have a block of white for too long upon startup
     (load-theme 'solarized-dark))
 
 
@@ -74,11 +75,13 @@
      paredit
      play-routes-mode
      projectile
+     projectile-ripgrep
      purescript-mode
      org-bullets
      sbt-mode
      scala-mode
      slime
+     smart-mode-line
      visual-regexp
      web-mode
      yaml-mode
