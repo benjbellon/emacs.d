@@ -27,9 +27,8 @@
 ;; Suppress splash screen
 (setq inhibit-startup-message t)
 
-(setq settings-dir
-      (expand-file-name "settings" user-emacs-directory))
-(add-to-list 'load-path settings-dir)
+(add-to-list 'load-path (expand-file-name "settings" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "utils" user-emacs-directory))
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
@@ -46,7 +45,6 @@
 (if (display-graphic-p)
     ;; load the theme so we don't have a block of white for too long upon startup
     (load-theme 'solarized-dark))
-
 
 (require 'setup-package)
 

@@ -1,3 +1,10 @@
+;;; setup-package.el --- initialize package repos
+
+;;; Commentary:
+
+;;; basic m/elpa configuration
+
+;;;Code:
 (require 'package)
 ;; Taken from magnars setup-package.el
 ;; https://github.com/magnars/.emacs.d/blob/master/settings/setup-package.el
@@ -30,3 +37,4 @@ re-downloaded in order to locate PACKAGE."
 	  (require-package package min-version t)))))
 
 (provide 'setup-package)
+;;; setup-package.el ends here
