@@ -107,10 +107,13 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; swap regexp search and regular search bindings
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-s") 'vr/isearch-forward)
+(global-set-key (kbd "C-r") 'vr/isearch-backward)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
+
+;; replace en masse
+(global-set-key (kbd "S-C-r") 'vr/replace)
 
 ;; eval  mode in region buffer
 (global-set-key (kbd "C-c C-e") 'eval-last-sexp)

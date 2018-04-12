@@ -47,6 +47,8 @@
     (load-theme 'solarized-dark))
 
 (require 'setup-package)
+(require 'visual-regexp)
+(require 'visual-regexp-steroids)
 
 (defun init-install-packages()
   (packages-install
@@ -121,10 +123,6 @@
 (require 'setup-web-mode)
 (require 'setup-yaml-mode)
 (require 'setup-yasnippet)
-
-(require 'visual-regexp)
-(define-key global-map (kbd "M-&") 'vr/query-replace)
-(define-key global-map (kbd "M-/") 'vr/replace)
 
 ;; full power
 (put 'downcase-region 'disabled nil)
