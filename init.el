@@ -22,16 +22,13 @@
 ;;;        GPG_AGENT_INFO
 ;;;
 ;;; Code:
-(package-initialize)
-
 ;; Suppress splash screen
 (setq inhibit-startup-message t)
 
 (add-to-list 'load-path (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "utils" user-emacs-directory))
 
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file)
+(require 'setup-package)
 
 ;; Write backup files to own directory
 (setq backup-directory-alist
@@ -40,15 +37,6 @@
 
 ;; Are we on a mac?
 (setq is-mac (equal system-type 'darwin))
-
-;; Are we in gui or terminal?
-(if (display-graphic-p)
-    ;; load the theme so we don't have a block of white for too long upon startup
-    (load-theme 'solarized-dark))
-
-(require 'setup-package)
-(require 'visual-regexp)
-(require 'visual-regexp-steroids)
 
 (defun init-install-packages()
   (packages-install
@@ -82,7 +70,9 @@
      scala-mode
      slime
      smart-mode-line
+     solarized-theme
      visual-regexp
+     visual-regexp-steroids
      web-mode
      yaml-mode
      yasnippet)))
@@ -92,6 +82,17 @@
   (error
    (package-refresh-contents)
    (init-install-packages)))
+
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
+
+;; Are we in gui or terminal?
+(if (display-graphic-p)
+    ;; load the theme so we don't have a block of white for too long upon startup
+    (load-theme 'solarized-dark))
+
+(require 'visual-regexp)
+(require 'visual-regexp-steroids)
 
 (require 'sane-defaults)
 
