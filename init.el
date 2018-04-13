@@ -46,6 +46,7 @@
      clojure-mode-extra-font-locking
      clojure-snippets
      dash
+     dockerfile-mode
      elm-mode
      ember-mode
      ensime
