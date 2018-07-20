@@ -28,5 +28,7 @@
 
 (define-key projectile-command-map (kbd "s g") 'projectile-ripgrep)
 
+(setq projectile-enable-caching t)
+
 (provide 'setup-projectile-mode)
 ;;; setup-projectile-mode.el ends here

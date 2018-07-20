@@ -21,7 +21,7 @@
 
 ;; C++
 (define-auto-insert "\\.cc\\'"  ["template.cc" custom/expand-yasnippet])
-(define-auto-insert "\\.hh\\'"  ["template.cc" custom/expand-yasnippet])
+(define-auto-insert "\\.hh\\'"  ["template.hh" custom/expand-yasnippet])
 
 ;; Python
 (define-auto-insert "\\.py\\'"  ["template.py" custom/expand-yasnippet])

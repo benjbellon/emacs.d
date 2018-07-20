@@ -10,7 +10,7 @@
 ;; https://github.com/magnars/.emacs.d/blob/master/settings/setup-package.el
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(package-initialize)
+;; (package-initialize)
 
 (unless (file-exists-p "~/.emacs.d/elpa/archives/melpa")
   (package-refresh-contents))

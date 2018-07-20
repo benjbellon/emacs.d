@@ -42,9 +42,13 @@
   (packages-install
    '(ace-window
      cider
+     company
+     company-c-headers
+     company-glsl
      clojure-mode
      clojure-mode-extra-font-locking
      clojure-snippets
+     cmake-mode
      dash
      dockerfile-mode
      elm-mode
@@ -60,6 +64,7 @@
      ido-vertical-mode
      magit
      markdown-mode
+     modern-cpp-font-lock
      multiple-cursors
      paredit
      play-routes-mode
@@ -72,6 +77,7 @@
      slime
      smart-mode-line
      solarized-theme
+     systemd
      visual-regexp
      visual-regexp-steroids
      web-mode
@@ -108,6 +114,7 @@
 (require 'setup-avy-mode)
 (require 'setup-c++-mode)
 (require 'setup-clojure-mode)
+(require 'setup-company-mode)
 (require 'setup-ember-mode)
 (require 'setup-flycheck)
 (require 'setup-haskell-mode)
@@ -122,6 +129,7 @@
 (require 'setup-purescript-mode)
 (require 'setup-scala-mode)
 (require 'setup-slime-mode)
+(require 'setup-txt-mode)
 (require 'setup-web-mode)
 (require 'setup-yaml-mode)
 (require 'setup-yasnippet)
