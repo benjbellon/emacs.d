@@ -7,4 +7,6 @@
   '(custom-set-variables
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
+(global-set-key (kbd "<f2>") 'flyspell-auto-correct-previous-word)
+
 (provide 'setup-flycheck)
