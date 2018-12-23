@@ -69,6 +69,7 @@
      haskell-mode
      highlight-escape-sequences
      ido-vertical-mode
+     json
      magit
      markdown-mode
      modern-cpp-font-lock
@@ -140,6 +141,9 @@
 (require 'setup-web-mode)
 (require 'setup-yaml-mode)
 (require 'setup-yasnippet)
+
+;; utility globals
+(require 'fetch-includes)
 
 ;; full power
 (put 'downcase-region 'disabled nil)
