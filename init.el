@@ -24,11 +24,14 @@
 ;;; Code:
 ;; Suppress splash screen
 
+;; Are we on a mac?
+(setq is-mac (equal system-type 'darwin))
+
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
+;;(package-initialize)
 
 (setq inhibit-startup-message t)
 
@@ -42,9 +45,6 @@
       `(("." . ,(expand-file-name
 		 (concat user-emacs-directory "backups")))))
 
-;; Are we on a mac?
-(setq is-mac (equal system-type 'darwin))
-
 (defun init-install-packages()
   (packages-install
    '(ace-window
@@ -52,10 +52,12 @@
      company
      company-c-headers
      company-glsl
+     company-lsp
      clojure-mode
      clojure-mode-extra-font-locking
      clojure-snippets
      cmake-mode
+     cquery
      dash
      dockerfile-mode
      elm-mode
@@ -63,6 +65,7 @@
      ensime
      flx-ido
      flycheck
+     flycheck-clangcheck
      flycheck-clojure
      flycheck-haskell
      flycheck-pos-tip
@@ -70,6 +73,8 @@
      highlight-escape-sequences
      ido-vertical-mode
      json
+     lsp-mode
+     lsp-ui
      magit
      markdown-mode
      modern-cpp-font-lock
@@ -129,6 +134,7 @@
 (require 'setup-ido)
 (require 'setup-keychain-environment)
 (require 'setup-lisp-mode)
+(require 'setup-lsp-mode)
 (require 'setup-magit)
 (require 'setup-markdown-mode)
 (require 'setup-multiple-cursors)
