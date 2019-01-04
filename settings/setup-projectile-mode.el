@@ -23,9 +23,11 @@
 ;; basic settings for projectile
 
 ;;; Code:
+(require 'projectile)
 
-(projectile-global-mode)
+(projectile-mode t)
 
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (define-key projectile-command-map (kbd "s g") 'projectile-ripgrep)
 
 (setq projectile-enable-caching t)

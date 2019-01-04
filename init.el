@@ -91,6 +91,8 @@
      smart-mode-line
      solarized-theme
      systemd
+     treemacs
+     treemacs-projectile
      visual-regexp
      visual-regexp-steroids
      web-mode
@@ -143,6 +145,7 @@
 (require 'setup-purescript-mode)
 (require 'setup-scala-mode)
 (require 'setup-slime-mode)
+(require 'setup-treemacs)
 (require 'setup-txt-mode)
 (require 'setup-web-mode)
 (require 'setup-yaml-mode)
