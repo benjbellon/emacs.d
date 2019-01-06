@@ -17,7 +17,7 @@
   (flyspell-mode t)
   (setup-margins))
 
-
+(add-to-list 'auto-mode-alist '("README\\'" . text-mode))
 (add-hook 'text-mode-hook 'text-configs)
 
 (provide 'setup-txt-mode)

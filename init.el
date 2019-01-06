@@ -83,6 +83,7 @@
      play-routes-mode
      projectile
      projectile-ripgrep
+     protobuf-mode
      purescript-mode
      org-bullets
      sbt-mode

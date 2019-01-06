@@ -4,7 +4,7 @@
  *
  * $2
  *
- * @author MAGIT_USER or SYSTEM_USER
+ * @author `user-full-name`
  * @date `(format-time-string "%Y-%m-%d")`
  */
 
