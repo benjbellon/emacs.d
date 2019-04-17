@@ -63,12 +63,14 @@
      elm-mode
      ember-mode
      ensime
+     erlang
      flx-ido
      flycheck
      flycheck-clangcheck
      flycheck-clojure
      flycheck-haskell
      flycheck-pos-tip
+     go-mode
      haskell-mode
      highlight-escape-sequences
      ido-vertical-mode
@@ -86,6 +88,7 @@
      protobuf-mode
      purescript-mode
      org-bullets
+     rust-mode
      sbt-mode
      scala-mode
      slime
@@ -133,6 +136,7 @@
 (require 'setup-company-mode)
 (require 'setup-ember-mode)
 (require 'setup-flycheck)
+(require 'setup-go-mode)
 (require 'setup-haskell-mode)
 (require 'setup-ido)
 (require 'setup-keychain-environment)

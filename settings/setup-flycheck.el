@@ -19,6 +19,11 @@
   '(custom-set-variables
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
+;; hack to get around go tool vet issue
+(let ((govet (flycheck-checker-get 'go-vet 'command)))
+  (when (equal (cadr govet) "tool")
+    (setf (cdr govet) (cddr govet))))
+
 (global-set-key (kbd "<f2>") 'flyspell-auto-correct-previous-word)
 (setq flycheck-clangcheck-analyze t)
 
