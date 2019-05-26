@@ -31,7 +31,7 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-;;(package-initialize)
+(package-initialize)
 
 (setq inhibit-startup-message t)
 
@@ -48,6 +48,7 @@
 (defun init-install-packages()
   (packages-install
    '(ace-window
+     cargo
      cider
      company
      company-c-headers
@@ -64,6 +65,7 @@
      ember-mode
      ensime
      erlang
+     exec-path-from-shell
      flx-ido
      flycheck
      flycheck-clangcheck
@@ -89,6 +91,7 @@
      purescript-mode
      org-bullets
      rust-mode
+     rust-playground
      sbt-mode
      scala-mode
      slime
@@ -146,8 +149,10 @@
 (require 'setup-markdown-mode)
 (require 'setup-multiple-cursors)
 (require 'setup-org-mode)
+(require 'setup-plz-mode)
 (require 'setup-projectile-mode)
 (require 'setup-purescript-mode)
+(require 'setup-rust-mode)
 (require 'setup-scala-mode)
 (require 'setup-slime-mode)
 (require 'setup-treemacs)
@@ -158,6 +163,7 @@
 
 ;; utility globals
 (require 'fetch-includes)
+(exec-path-from-shell-initialize)
 
 ;; full power
 (put 'downcase-region 'disabled nil)

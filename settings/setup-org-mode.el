@@ -23,8 +23,8 @@
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 
-(setq org-agenda-files (list "~/org/todo_work.org"
-                             "~/org/todo_home.org"))
+(setq org-agenda-files (list "~/Dropbox/org/todo_work.org"
+                             "~/Dropbox/org/todo_home.org"))
 
 (org-babel-do-load-languages
  'org-babel-load-languages

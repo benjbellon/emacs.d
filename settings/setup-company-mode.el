@@ -15,8 +15,11 @@
 
 (setq company-idle-delay 0.1)
 (setq company-clang-executable "/usr/bin/clang++")
+(setq company-go-gocode-command (concat (getenv "HOME") "/go/bin/gocode"))
+
 
 (push 'company-lsp company-backends)
+(push 'company-go company-backends)
 (add-hook 'after-init-hook 'global-company-mode)
 
 (provide 'setup-company-mode)
