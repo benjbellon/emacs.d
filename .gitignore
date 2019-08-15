@@ -12,3 +12,5 @@ auto-save-list*
 metastore_db*
 projectile-bookmarks.eld
 projectile.cache
+rust-playground/
+.cache
