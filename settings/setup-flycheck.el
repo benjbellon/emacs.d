@@ -12,7 +12,6 @@
 
 (add-hook 'c-mode-hook #'setup-custom-clang-checker)
 (add-hook 'c++-mode-hook #'setup-custom-clang-checker)
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
 (global-flycheck-mode 1)
 

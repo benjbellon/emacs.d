@@ -54,6 +54,7 @@
      company-c-headers
      company-glsl
      company-lsp
+     company-terraform
      clojure-mode
      clojure-mode-extra-font-locking
      clojure-snippets
@@ -98,6 +99,7 @@
      smart-mode-line
      solarized-theme
      systemd
+     terraform-mode
      treemacs
      treemacs-projectile
      visual-regexp
@@ -118,7 +120,7 @@
 ;; Are we in gui or terminal?
 (if (display-graphic-p)
     ;; load the theme so we don't have a block of white for too long upon startup
-    (load-theme 'solarized-dark))
+    (load-theme 'solarized-dark t))
 
 (require 'visual-regexp)
 (require 'visual-regexp-steroids)
@@ -151,10 +153,12 @@
 (require 'setup-org-mode)
 (require 'setup-plz-mode)
 (require 'setup-projectile-mode)
+(require 'setup-protobuf-mode)
 (require 'setup-purescript-mode)
 (require 'setup-rust-mode)
 (require 'setup-scala-mode)
 (require 'setup-slime-mode)
+(require 'setup-terraform-mode)
 (require 'setup-treemacs)
 (require 'setup-txt-mode)
 (require 'setup-web-mode)

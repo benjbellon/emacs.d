@@ -20,6 +20,7 @@
 
 (push 'company-lsp company-backends)
 (push 'company-go company-backends)
+(push 'company-terraform company-backends)
 (add-hook 'after-init-hook 'global-company-mode)
 
 (provide 'setup-company-mode)
