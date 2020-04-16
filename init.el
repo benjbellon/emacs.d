@@ -48,6 +48,7 @@
 (defun init-install-packages()
   (packages-install
    '(ace-window
+     blacken
      cargo
      cider
      company
@@ -102,6 +103,7 @@
      terraform-mode
      treemacs
      treemacs-projectile
+     typescript-mode
      visual-regexp
      visual-regexp-steroids
      web-mode
@@ -155,6 +157,7 @@
 (require 'setup-projectile-mode)
 (require 'setup-protobuf-mode)
 (require 'setup-purescript-mode)
+(require 'setup-python-mode)
 (require 'setup-rust-mode)
 (require 'setup-scala-mode)
 (require 'setup-slime-mode)
