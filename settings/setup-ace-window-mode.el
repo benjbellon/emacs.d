@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2018  Benj Bellon
 
-;; Author: Benj Bellon <bbellon@bbellon-ld2.linkedin.biz>
+;; Author: Benj Bellon
 ;; Keywords: lisp
 
 ;; This program is free software; you can redistribute it and/or modify

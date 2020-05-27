@@ -27,4 +27,6 @@
 (global-set-key (kbd "<f2>") 'flyspell-auto-correct-previous-word)
 (setq flycheck-clangcheck-analyze t)
 
+(add-hook 'sh-mode-hook 'flycheck-mode)
+
 (provide 'setup-flycheck)

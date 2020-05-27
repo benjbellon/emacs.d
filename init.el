@@ -83,6 +83,7 @@
      lsp-ui
      magit
      markdown-mode
+     merlin
      modern-cpp-font-lock
      multiple-cursors
      paredit
@@ -103,6 +104,7 @@
      terraform-mode
      treemacs
      treemacs-projectile
+     tuareg
      typescript-mode
      visual-regexp
      visual-regexp-steroids
@@ -141,6 +143,7 @@
 (require 'setup-c++-mode)
 (require 'setup-clojure-mode)
 (require 'setup-company-mode)
+(require 'setup-dockerfile-mode)
 (require 'setup-ember-mode)
 (require 'setup-flycheck)
 (require 'setup-go-mode)
@@ -163,10 +166,15 @@
 (require 'setup-slime-mode)
 (require 'setup-terraform-mode)
 (require 'setup-treemacs)
+(require 'setup-typescript-mode)
 (require 'setup-txt-mode)
 (require 'setup-web-mode)
 (require 'setup-yaml-mode)
 (require 'setup-yasnippet)
+
+;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
+(require 'setup-opam)
+;; ## end of OPAM user-setup addition for emacs / base ## keep this line
 
 ;; utility globals
 (require 'fetch-includes)
