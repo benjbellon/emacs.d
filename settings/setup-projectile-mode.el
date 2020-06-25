@@ -29,6 +29,7 @@
 
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (define-key projectile-command-map (kbd "s g") 'projectile-ripgrep)
+(define-key projectile-command-map (kbd "s r") 'projectile-replace-regexp)
 
 (setq projectile-enable-caching t)
 

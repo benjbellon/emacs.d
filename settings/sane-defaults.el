@@ -14,6 +14,11 @@
 (define-key global-map (kbd "C-x w") 'browse-url-emacs)
 (define-key global-map (kbd "C-x M-w") 'browse-url-chromium)
 
+;; define wrappers
+(global-set-key (kbd "M-[") 'insert-pair)
+(global-set-key (kbd "M-{") 'insert-pair)
+(global-set-key (kbd "M-\"") 'insert-pair)
+
 ;; Also auto refresh dired, but be quiet about it
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)

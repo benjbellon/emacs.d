@@ -93,6 +93,7 @@
      protobuf-mode
      purescript-mode
      org-bullets
+     restclient
      rust-mode
      rust-playground
      sbt-mode
@@ -106,6 +107,7 @@
      treemacs-projectile
      tuareg
      typescript-mode
+     uuidgen
      visual-regexp
      visual-regexp-steroids
      web-mode
