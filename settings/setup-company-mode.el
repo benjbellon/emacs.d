@@ -18,7 +18,7 @@
 (setq company-go-gocode-command (concat (getenv "HOME") "/go/bin/gocode"))
 
 
-(push 'company-lsp company-backends)
+;; (push 'company-lsp company-backends)
 (push 'company-go company-backends)
 (push 'company-terraform company-backends)
 (add-hook 'after-init-hook 'global-company-mode)
