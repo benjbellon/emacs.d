@@ -158,7 +158,7 @@ CURRENT-NAME, if it does not already have them:
      dap-mode
      dockerfile-mode
      elm-mode
-     ember-mode
+     emojify
      erlang
      exec-path-from-shell
      flx-ido
@@ -239,7 +239,6 @@ CURRENT-NAME, if it does not already have them:
 (require 'setup-clojure-mode)
 (require 'setup-company-mode)
 (require 'setup-dockerfile-mode)
-(require 'setup-ember-mode)
 (require 'setup-flycheck)
 (require 'setup-go-mode)
 (require 'setup-haskell-mode)

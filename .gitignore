@@ -14,3 +14,5 @@ projectile-bookmarks.eld
 projectile.cache
 rust-playground/
 .cache
+.extension
+emojis

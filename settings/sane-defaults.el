@@ -135,6 +135,9 @@
 (global-set-key (kbd "s-c") 'clipboard-kill-region)
 (global-set-key (kbd "s-v") 'clipboard-yank)
 
+;; emojify everywhere!
+(global-emojify-mode 1)
+
 (defun beautify-json ()
   (interactive)
   (let ((b (if mark-active (min (point) (mark)) (point-min)))

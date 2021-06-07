@@ -10,8 +10,14 @@
 
 (add-hook 'c-mode-hook #'lsp)
 (add-hook 'c++-mode-hook #'lsp)
+(add-hook 'dart-mode-hook #'lsp)
+(add-hook 'lisp-mode-hook #'lsp)
+(add-hook 'python-mode-hook #'lsp)
 
 (add-hook 'lsp-after-open-hook 'lsp-ui-mode)
+
+(with-eval-after-load 'lsp-mode
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
 (provide 'setup-lsp-mode)
 ;;; setup-lsp-mode.el ends here
