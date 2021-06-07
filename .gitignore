@@ -16,3 +16,4 @@ rust-playground/
 .cache
 .extension
 emojis
+.lsp-session*
