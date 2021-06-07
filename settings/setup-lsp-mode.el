@@ -1,4 +1,7 @@
 ;;; setup-lsp-mode.el --- lsp setup                  -*- lexical-binding: t; -*-
+(setq lsp-keymap-prefix "C-c l")
+(define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+
 (require 'lsp-mode)
 (require 'cquery)
 
