@@ -155,6 +155,7 @@ CURRENT-NAME, if it does not already have them:
      cmake-mode
      cquery
      dash
+     dap-mode
      dockerfile-mode
      elm-mode
      ember-mode
@@ -202,6 +203,7 @@ CURRENT-NAME, if it does not already have them:
      visual-regexp
      visual-regexp-steroids
      web-mode
+     which-key
      yaml-mode
      yasnippet)))
 
