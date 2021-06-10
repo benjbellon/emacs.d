@@ -145,6 +145,9 @@
 ;; Dired Settings
 (setq dired-omit-mode t)
 
+;; which-key everywhere
+(setq which-key-mode t)
+
 ;; Override C-x C-c to open the default ansi-term buffer
 ;; 0. check if we are in GUI or user want to override behavior
 ;; 1. check if ansi-term buffer exists

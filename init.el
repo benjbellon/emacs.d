@@ -187,7 +187,7 @@ CURRENT-NAME, if it does not already have them:
      purescript-mode
      org-bullets
      restclient
-     rust-mode
+     rustic
      rust-playground
      sbt-mode
      slime
@@ -256,7 +256,7 @@ CURRENT-NAME, if it does not already have them:
 (require 'setup-protobuf-mode)
 (require 'setup-purescript-mode)
 (require 'setup-python-mode)
-(require 'setup-rust-mode)
+(require 'setup-rustic-mode)
 (require 'setup-slime-mode)
 (require 'setup-terraform-mode)
 (require 'setup-treemacs)
