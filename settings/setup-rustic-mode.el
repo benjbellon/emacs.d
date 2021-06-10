@@ -6,4 +6,4 @@
 (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook)
 
 (provide 'setup-rustic-mode)
-;;; setup-rust-mode.el ends here
+;;; setup-rustic-mode.el ends here
