@@ -6,7 +6,6 @@
 
 ;;; Code:
 (require 'company)
-(require 'company-lsp)
 
 ;; When working with a larger project, until a parser is written
 ;; for compile_commands.json DB, you can add the headers to
