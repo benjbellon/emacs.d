@@ -156,11 +156,13 @@ CURRENT-NAME, if it does not already have them:
      cquery
      dash
      dap-mode
+     dart-mode
      dockerfile-mode
      elm-mode
      emojify
      erlang
      exec-path-from-shell
+     flutter
      flx-ido
      flycheck
      flycheck-clangcheck
@@ -173,6 +175,7 @@ CURRENT-NAME, if it does not already have them:
      highlight-escape-sequences
      ido-vertical-mode
      json
+     lsp-dart
      lsp-mode
      lsp-ui
      magit
@@ -193,6 +196,8 @@ CURRENT-NAME, if it does not already have them:
      slime
      smart-mode-line
      solarized-theme
+     swift-mode
+     swift-playground-mode
      systemd
      terraform-mode
      treemacs
