@@ -80,6 +80,7 @@
      hasklig-mode
      highlight-escape-sequences
      ido-vertical-mode
+     jinja2-mode
      json
      lsp-dart
      lsp-mode
