@@ -94,6 +94,7 @@
      projectile-ripgrep
      protobuf-mode
      purescript-mode
+     pyvenv-mode
      org-bullets
      restclient
      rustic
