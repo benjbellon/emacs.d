@@ -1,4 +1,4 @@
-;;; init.el --- initialize emacs configuration
+;; init.el --- initialize emacs configuration
 
 ;;; Author: Benj Bellon <benjaminbellon@gmail.com>
 ;;; Maintainer: Benj Bellon <benjaminbellon@gmail.com>
@@ -95,7 +95,7 @@
      projectile-ripgrep
      protobuf-mode
      purescript-mode
-     pyvenv-mode
+     pyvenv
      org-bullets
      restclient
      rustic
