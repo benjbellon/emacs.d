@@ -89,6 +89,7 @@
      markdown-mode
      modern-cpp-font-lock
      multiple-cursors
+     nasm-mode
      paredit
      play-routes-mode
      projectile
