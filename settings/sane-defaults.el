@@ -19,6 +19,12 @@
 (global-set-key (kbd "M-{") 'insert-pair)
 (global-set-key (kbd "M-\"") 'insert-pair)
 
+;; use mu4e by default
+(global-set-key (kbd "C-x m") 'mu4e)
+
+;; use unix pass as our password store
+(setq auth-sources '(password-store))
+
 ;; Also auto refresh dired, but be quiet about it
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)

@@ -1,5 +1,7 @@
 ;;; setup-custom.el --- non-user specific customizations  -*- lexical-binding: t; -*-
 
+(set-frame-font "Source Code Pro Medium" nil t)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

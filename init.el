@@ -91,6 +91,7 @@
      multiple-cursors
      nasm-mode
      paredit
+     pass
      play-routes-mode
      projectile
      projectile-ripgrep
@@ -163,6 +164,7 @@
 (require 'setup-lsp-mode)
 (require 'setup-magit)
 (require 'setup-markdown-mode)
+(require 'setup-mu4e)
 (require 'setup-multiple-cursors)
 (require 'setup-org-mode)
 (require 'setup-plz-mode)
@@ -180,6 +182,8 @@
 (require 'setup-yaml-mode)
 (require 'setup-yasnippet)
 
+;; enable pass as our auth source
+(auth-source-pass-enable)
 
 ;; utility globals
 (require 'fetch-includes)
