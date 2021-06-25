@@ -23,7 +23,7 @@
 (set-face-attribute 'web-mode-block-delimiter-face nil :foreground "medium aquamarine")
 
 (setq web-mode-engines-alist
-      '(("handlebars" . "\\.hbs'")))
+      '(("jinja" . "\\.html\\'")))
 
 (defun indent-offset ()
   "Hooks for web mode."
@@ -33,10 +33,10 @@
   (setq web-mode-style-padding 2)
   (setq web-mode-script-padding 2))
 
-(eval-after-load 'web-mode
-  '(add-hook 'web-mode-hook #'add-node-modules-path))
+;; (eval-after-load 'web-mode
+;;   '(add-hook 'web-mode-hook #'add-node-modules-path))
 
 (add-hook 'web-mode-hook 'indent-offset)
-(add-hook 'web-mode-hook 'prettier-js-mode)
+;(add-hook 'web-mode-hook 'prettier-js-mode)
 
 (provide 'setup-web-mode)

@@ -6,7 +6,8 @@
  (magit-file-dispatch nil)
  (magit-gitignore nil)
  (magit-log
-  ("-n256" "--graph" "--decorate"))
+  ("-n256" "--graph" "--decorate")
+  ("-n256" "--graph" "--color" "--decorate"))
  (magit-merge nil)
  (magit-pull nil)
  (magit-push nil)

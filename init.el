@@ -147,6 +147,7 @@
 (add-to-list 'exec-path "/usr/local/bin")
 
 (require 'setup-ace-window-mode)
+(require 'setup-asm-mode)
 (require 'setup-auto-insert-mode)
 (require 'setup-avy-mode)
 (require 'setup-c++-mode)
