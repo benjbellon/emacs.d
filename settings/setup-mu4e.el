@@ -3,6 +3,7 @@
 (require 'org-mime)
 (require 'org-mu4e)
 (require 'smtpmail)
+(require 'mu4e-alert)
 
 (setq personal-email (password-store-get-field "mbsync/personal-gmail" "username"))
 
@@ -73,10 +74,17 @@
                   (mu4e-trash-folder . "/personal-gmail/[Gmail]/Trash")
                   (mu4e-refile-folder . "/personal-gmail/[Gmail]/All Mail")
 
-                  (mu4e-maildir-shortcuts . (("/personal-gmail/INBOX" . ?i)
-                                             ))
+                  (mu4e-maildir-shortcuts . (("/personal-gmail/Inbox" . ?i)
+                                             ("/personal-gmail/[Gmail]/Drafts" . ?d)
+                                             ("/personal-gmail/[Gmail]/Trash" . ?t)
+                                             ("/personal-gmail/[Gmail]/All Mail" . ?a)))
 
+                  ;; (mu4e-bookmarks . (("date:today..now AND flag:unread AND (NOT maildir:/personal-gmail/[Gmail]/Trash OR NOT maildir:/personal-gmail/[Gmail]/Sent Mail)" "Inbox" ?i)
+                  ;;                    ("flag:unread AND (NOT maildir:/personal-gmail/[Gmail]/Trash AND NOT maildir:/personal-gmail/[Gmail]/Sent Mail)" "Unread" ?u)
+                  ;;                    ("date:7d..now AND (NOT maildir:/personal-gmail/[Gmail]/Trash OR NOT maildir:/personal-gmail/[Gmail]/Sent Mail)" "Last 7 Days" ?w)
+                  ;;                    ("NOT maildir:/personal-gmail/[Gmail]/Trash AND NOT maildir:/personal-gmail/[Gmail]/Sent Mail" "All" ?a)))
 
+                  (smtpmail-queue-dir . "~/.mail/personal-gmail/queue/cur")
                   (smtpmail-smtp-user . ,personal-email)
                   (smtpmail-smtp-server . "smtp.gmail.com")
                   (smtpmail-smtp-service . 587)))
@@ -87,6 +95,18 @@
   (imagemagick-register-types))
 
 (add-to-list 'mu4e-view-actions '("View In Browser" . mu4e-action-view-in-browser) t)
+
+;(add-hook 'message-send-hook (lambda () (mml-secure-message-sign-pgpmime)))
+
+;; mu4e-alerts
+(mu4e-alert-set-default-style 'libnotify)
+(add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
+(add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+(setq
+ mu4e-alert-interesting-mail-query (concat
+                                    "date:today..now"
+                                    " AND flag:unread"
+                                    "  AND (NOT maildir:/personal-gmail/[Gmail]/Trash OR NOT maildir:/personal-gmail/[Gmail]/Sent Mail)"))
 
 
 (provide 'setup-mu4e)

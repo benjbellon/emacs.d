@@ -88,6 +88,7 @@
      magit
      markdown-mode
      modern-cpp-font-lock
+     mu4e-alert
      multiple-cursors
      nasm-mode
      paredit
@@ -98,7 +99,6 @@
      protobuf-mode
      purescript-mode
      pyvenv
-     org-bullets
      restclient
      rustic
      rust-playground
