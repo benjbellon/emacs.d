@@ -79,10 +79,10 @@
                                              ("/personal-gmail/[Gmail]/Trash" . ?t)
                                              ("/personal-gmail/[Gmail]/All Mail" . ?a)))
 
-                  ;; (mu4e-bookmarks . (("date:today..now AND flag:unread AND (NOT maildir:/personal-gmail/[Gmail]/Trash OR NOT maildir:/personal-gmail/[Gmail]/Sent Mail)" "Inbox" ?i)
-                  ;;                    ("flag:unread AND (NOT maildir:/personal-gmail/[Gmail]/Trash AND NOT maildir:/personal-gmail/[Gmail]/Sent Mail)" "Unread" ?u)
-                  ;;                    ("date:7d..now AND (NOT maildir:/personal-gmail/[Gmail]/Trash OR NOT maildir:/personal-gmail/[Gmail]/Sent Mail)" "Last 7 Days" ?w)
-                  ;;                    ("NOT maildir:/personal-gmail/[Gmail]/Trash AND NOT maildir:/personal-gmail/[Gmail]/Sent Mail" "All" ?a)))
+                  (mu4e-bookmarks . (("date:today..now AND flag:unread AND NOT (\"maildir:/personal-gmail/[Gmail]/Trash\")" "Inbox" ?i)
+                                     ("date:today..now AND NOT (\"maildir:/personal-gmail/[Gmail]/Trash\" OR \"maildir:/personal-gmail/[Gmail]/Sent Mail\")" "Today" ?t)
+                                     ("date:7d..now AND NOT (\"maildir:/personal-gmail/[Gmail]/Trash\" OR \"maildir:/personal-gmail/[Gmail]/Sent Mail\")" "Last 7 Days" ?w)
+                                     ("NOT (\"maildir:/personal-gmail/[Gmail]/Trash\" OR \"maildir:/personal-gmail/[Gmail]/Sent Mail\")" "All" ?a)))
 
                   (smtpmail-queue-dir . "~/.mail/personal-gmail/queue/cur")
                   (smtpmail-smtp-user . ,personal-email)
@@ -96,7 +96,8 @@
 
 (add-to-list 'mu4e-view-actions '("View In Browser" . mu4e-action-view-in-browser) t)
 
-;(add-hook 'message-send-hook (lambda () (mml-secure-message-sign-pgpmime)))
+(add-hook 'mu4e-compose-mode-hook (lambda () (auto-fill-mode -1)))
+(add-hook 'message-send-hook (lambda () (mml-secure-message-sign-pgpmime)))
 
 ;; mu4e-alerts
 (mu4e-alert-set-default-style 'libnotify)
@@ -106,7 +107,7 @@
  mu4e-alert-interesting-mail-query (concat
                                     "date:today..now"
                                     " AND flag:unread"
-                                    "  AND (NOT maildir:/personal-gmail/[Gmail]/Trash OR NOT maildir:/personal-gmail/[Gmail]/Sent Mail)"))
+                                    "  AND NOT (\"maildir:/personal-gmail/[Gmail]/Trash\" OR \"maildir:/personal-gmail/[Gmail]/Sent Mail\")"))
 
 
 (provide 'setup-mu4e)

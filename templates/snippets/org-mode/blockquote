@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: blockquote
+# key: >
+# --
+#+begin_quote
+$0
+#+end_quote

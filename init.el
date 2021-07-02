@@ -59,6 +59,7 @@
      clojure-mode-extra-font-locking
      clojure-snippets
      cmake-mode
+     csv-mode
      cquery
      dash
      dap-mode
@@ -99,6 +100,7 @@
      protobuf-mode
      purescript-mode
      pyvenv
+     rainbow-mode
      restclient
      rustic
      rust-playground

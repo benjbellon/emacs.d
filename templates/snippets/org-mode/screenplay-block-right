@@ -1,0 +1,6 @@
+# key: "r
+# name: screenplay-block-right
+# --
+#+BEGIN_SCREENPLAY_RIGHT
+$0
+#+END_SCREENPLAY_RIGHT
