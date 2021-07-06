@@ -92,6 +92,7 @@
      mu4e-alert
      multiple-cursors
      nasm-mode
+     nginx-mode
      paredit
      pass
      play-routes-mode
