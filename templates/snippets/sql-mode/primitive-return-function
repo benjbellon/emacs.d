@@ -1,0 +1,13 @@
+# key: fnp
+# name: Create function with primitive return value.
+# --
+drop function if exists $1();
+create or replace function $1(
+       $0
+)
+returns $2 as $$
+declare
+begin
+
+end;
+$$ language plpgsql;

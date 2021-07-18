@@ -1,13 +1,6 @@
 ;;; setup-custom.el --- non-user specific customizations  -*- lexical-binding: t; -*-
-
-(set-frame-font "Source Code Pro Medium" nil t)
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:height 90 :width normal :family "Source Code Pro Medium")))))
+(set-face-attribute 'default nil :font "Source Code Pro Medium-9")
+(set-fontset-font t nil "JoyPixels" nil 'append)
 
 ;; no line highlight
 (hl-line-mode 0)
