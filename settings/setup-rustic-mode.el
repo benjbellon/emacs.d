@@ -1,3 +1,16 @@
+(require 'dap-lldb)
+(require 'dap-gdb-lldb)
+
+(dap-gdb-lldb-setup)
+(dap-register-debug-template
+ "Rust::LLDB Run Configuration"
+ (list :type "lldb"
+       :request "launch"
+       :name "GDB::Run"
+       :gdbpath "rust-lldb"
+       :target nil
+       :cwd nil))
+
 (defun rk/rustic-mode-hook ()
   ;; so that run C-c C-c C-r works without having to confirm
   (setq-local buffer-save-without-query t))

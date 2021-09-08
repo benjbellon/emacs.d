@@ -12,6 +12,7 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.eex\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.svelte\\'" . web-mode))
 
 
 (set-face-attribute 'web-mode-doctype-face nil :foreground "misty rose")
@@ -22,7 +23,7 @@
 (set-face-attribute 'web-mode-block-delimiter-face nil :foreground "medium aquamarine")
 
 (setq web-mode-engines-alist
-      '(("jinja" . "\\.html\\'")))
+      '(("django" . "\\.html\\'")))
 
 (defun indent-offset ()
   "Hooks for web mode."

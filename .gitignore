@@ -19,3 +19,5 @@ emojis
 .lsp-session*
 .dap-breakpoints
 network-security.data
+transient/
+pcache

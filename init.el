@@ -167,7 +167,7 @@
 (require 'setup-lsp-mode)
 (require 'setup-magit)
 (require 'setup-markdown-mode)
-(require 'setup-mu4e)
+;;(require 'setup-mu4e)
 (require 'setup-multiple-cursors)
 (require 'setup-org-mode)
 (require 'setup-plz-mode)

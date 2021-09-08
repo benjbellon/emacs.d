@@ -17,6 +17,7 @@
 (add-hook 'lisp-mode-hook #'lsp)
 (add-hook 'python-mode-hook #'lsp)
 (add-hook 'rustic-mode #'lsp)
+(add-hook 'web-mode-hook #'lsp)
 
 (add-hook 'lsp-after-open-hook 'lsp-ui-mode)
 
