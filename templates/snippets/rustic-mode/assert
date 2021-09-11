@@ -1,0 +1,4 @@
+me : assert
+#key : as
+# --
+assert!(${1:truth});

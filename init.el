@@ -80,6 +80,7 @@
      haskell-mode
      hasklig-mode
      highlight-escape-sequences
+     hl-todo
      ido-vertical-mode
      jinja2-mode
      json
@@ -157,6 +158,7 @@
 (require 'setup-c++-mode)
 (require 'setup-clojure-mode)
 (require 'setup-company-mode)
+(require 'setup-dap-mode)
 (require 'setup-dockerfile-mode)
 (require 'setup-flycheck)
 (require 'setup-go-mode)
@@ -170,7 +172,6 @@
 ;;(require 'setup-mu4e)
 (require 'setup-multiple-cursors)
 (require 'setup-org-mode)
-(require 'setup-plz-mode)
 (require 'setup-projectile-mode)
 (require 'setup-protobuf-mode)
 (require 'setup-purescript-mode)
