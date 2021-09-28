@@ -23,6 +23,7 @@
 
 (with-eval-after-load 'lsp-mode
   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+  (define-key lsp-mode-map (kbd "C-c l u f") 'lsp-ui-imenu)
   (define-key lsp-mode-map (kbd "C-c l t d") 'lsp-dart-show-outline)
   (define-key lsp-mode-map (kbd "C-c l t f") 'lsp-dart-show-flutter-outline))
 
