@@ -37,6 +37,7 @@
 
 (add-to-list 'load-path (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "utils" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "templates/auto-insert" user-emacs-directory))
 
 (require 'setup-package)
 
@@ -185,6 +186,7 @@
 (require 'setup-web-mode)
 (require 'setup-yaml-mode)
 (require 'setup-yasnippet)
+(require '.yas-setup)
 
 ;; enable pass as our auth source
 (auth-source-pass-enable)
