@@ -9,6 +9,10 @@
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq lsp-completion-provider :capf)
 
+;; disable lsp-ui-doc-mode due to very slow update performance
+;; TRACK: https://github.com/emacs-lsp/lsp-ui/issues/613
+(setq lsp-ui-doc-enable nil)
+
 (lsp-treemacs-sync-mode 1)
 
 (add-hook 'c-mode-hook #'lsp)

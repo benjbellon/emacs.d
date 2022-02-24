@@ -1,22 +1,42 @@
 ;; Pretty bullets
 (global-set-key (kbd "C-c a") 'org-agenda)
 
-;; open org mode planner
-(global-set-key (kbd "C-c b")
-                (lambda () (interactive)
-                  (delete-other-windows)
-                  (find-file "~/workspace/.org/planner.org")))
-
 (require 'rainbow-mode)
 (add-hook 'org-mode-hook 'rainbow-mode)
 
+(setq org-directory "~/workspace/.org")
 (setq org-base-directory "~/workspace/.org")
 
 (setq
  org-export-html-postamble nil
  org-log-done 'note
- org-todo-keywords '((sequence "Todo" "In-Progress" "Waiting" "Done"))
- org-agenda-files (list "~/workspace/.org/planner.org"))
+ org-todo-keywords '((sequence "Todo(t)" "In Progress(w)" "Blocked(b)" "|" "DONE(d)" "CANCELLED(c)"))
+
+ org-inbox-file (concat org-base-directory "/inbox.org")
+ org-projects-file (concat org-base-directory "/projects.org")
+ org-someday-file (concat org-base-directory "/someday.org")
+ org-watchdog-file (concat org-base-directory "/watchdog.org")
+
+ org-agenda-files `(,org-inbox-file ,org-projects-file ,org-watchdog-file)
+ org-refile-targets '((org-projects-file :maxlevel . 3)
+                      (org-someday-file :level . 1)
+                      (org-watchdog-file :maxlevel . 2)))
+
+
+;; setup: org-capture
+(setq org-capture-templates '(("t" "Todo [inbox]" entry
+                               (file+headline org-inbox-file "Tasks")
+                               "* TODO %i%?")
+                              ("w" "Watchdog" entry
+                               (file+headline org-watchdog-file "Watchdog")
+                               "* %i%? \n %U")))
+
+(setq org-agenda-custom-commands
+      '(("b" "Bug" tags-todo "@bug"
+         ((org-agenda-overriding-header "Bug")))))
+
+
+(global-set-key (kbd "C-c c") 'org-capture)
 
 ;; org publish
 (require 'ox-publish)
