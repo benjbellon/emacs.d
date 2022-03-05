@@ -25,7 +25,7 @@
 
 ;; setup: org-capture
 (setq org-capture-templates '(("t" "Todo [inbox]" entry
-                               (file+headline org-inbox-file "Tasks")
+                               (file+headline org-inbox-file "Backlog")
                                "*** Todo %i %?")))
 
 (setq org-agenda-custom-commands
