@@ -26,58 +26,15 @@
 ;; setup: org-capture
 (setq org-capture-templates '(("t" "Todo [inbox]" entry
                                (file+headline org-inbox-file "Tasks")
-                               "* TODO %i%?")
-                              ("w" "Watchdog" entry
-                               (file+headline org-watchdog-file "Watchdog")
-                               "* %i%? \n %U")))
+                               "*** Todo %i %?")))
 
 (setq org-agenda-custom-commands
       '(("b" "Bug" tags-todo "@bug"
          ((org-agenda-overriding-header "Bug")))))
 
 
-(global-set-key (kbd "C-c c") 'org-capture)
-
-;; org publish
-(require 'ox-publish)
-
-(defun publishing-entry (project)
-  `(,project
-    :base-directory ,(concat org-base-directory "/" project)
-    :base-extension "org"
-    :headline-levels 4
-    :html-head-include-default-style nil
-    :html-head-include-scripts nil
-    :html-head-extra ,(concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\"")
-    :html-mathjax nil
-    :html-preamble nil
-    :html-validation-link nil
-    :publishing-directory ,(concat org-base-directory "/" project "/public/")
-    :publishing-function org-html-publish-to-html
-    :recursive t
-    :section-numbers nil
-    :time-stamp-file nil
-    :with-toc nil
-    :with-author nil
-    :with-creator nil))
-
-(defun publishing-static (project)
-  `(,(concat project "-static")
-    :base-directory ,(concat org-base-directory "/" project)
-    :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-    :publishing-directory ,(concat org-base-directory "/" project "/public/")
-    :recursive t
-    :publishing-function org-publish-attachment))
-
-(setq
- projects '("rse8.com")
- org-html-htmlize-output-type 'css)
-
-(setq org-publish-project-alist
-      `(
-        ,@(mapcar (lambda (proj) (publishing-entry proj)) projects)
-        ,@(mapcar (lambda (proj) (publishing-static proj)) projects)
-        ("rse8-site" :components ("rse8.com" "rse8.com-static"))
-        ))
+(global-set-key (kbd "C-c C-o c") 'org-capture)
+(global-set-key (kbd "C-c C-o o") '(lambda () (interactive) (find-file org-base-directory)))
+(global-set-key (kbd "C-c C-o i") '(lambda () (interactive) (find-file (concat org-base-directory "/inbox.org"))))
 
 (provide 'setup-org-mode)
