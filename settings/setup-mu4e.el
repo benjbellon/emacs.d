@@ -1,7 +1,7 @@
 ;;; Code:
 (require 'mu4e)
-(require 'org-mime)
-(require 'org-mu4e)
+;; (require 'org-mime)
+;; (require 'org-mu4e)
 (require 'smtpmail)
 (require 'mu4e-alert)
 

@@ -12,6 +12,7 @@
 ;; disable lsp-ui-doc-mode due to very slow update performance
 ;; TRACK: https://github.com/emacs-lsp/lsp-ui/issues/613
 (setq lsp-ui-doc-enable nil)
+(setq lsp-clients-clangd-args '("--compile-commands-dir=build"))
 
 (lsp-treemacs-sync-mode 1)
 
