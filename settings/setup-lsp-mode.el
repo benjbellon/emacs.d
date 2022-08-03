@@ -19,6 +19,7 @@
 (add-hook 'c-mode-hook #'lsp)
 (add-hook 'c++-mode-hook #'lsp)
 (add-hook 'dart-mode-hook #'lsp)
+(add-hook 'haskell-mode-hook #'lsp)
 (add-hook 'lisp-mode-hook #'lsp)
 (add-hook 'python-mode-hook #'lsp)
 (add-hook 'rustic-mode #'lsp)

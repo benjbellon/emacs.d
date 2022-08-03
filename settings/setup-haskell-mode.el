@@ -1,4 +1,5 @@
 (require 'haskell-mode)
+(require 'lsp-haskell)
 (require 'flycheck-haskell)
 
 (defun haskell/pretty-symbols ()

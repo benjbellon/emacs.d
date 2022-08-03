@@ -86,6 +86,7 @@
      jinja2-mode
      json
      lsp-dart
+     lsp-haskell
      lsp-mode
      lsp-ui
      magit
