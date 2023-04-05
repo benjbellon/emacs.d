@@ -12,7 +12,8 @@
             ("t" . treemacs-select-window)
             ("b" . treemacs-bookmark)
             ("f" . treemacs-find-file)
-            ("d" . treemacs-delete-other-windows)))
+            ("d" . treemacs-delete-other-windows)
+            ("s" . lsp-treemacs-symbols)))
 
 (provide 'setup-treemacs)
 ;;; setup-treemacs.el ends here

@@ -10,8 +10,8 @@
           ("<=" . ?≤)
           ("()" . ?∅))))
 
-(add-hook 'haskell-mode-hook 'hasklig-mode)
-(add-hook 'haskell-mode-hook 'haskell/pretty-symbols)
+;; (add-hook 'haskell-mode-hook 'hasklig-mode)
+;; (add-hook 'haskell-mode-hook 'haskell/pretty-symbols)
 
 ;; (setq inferior-haskell-find-project-root nil)
 

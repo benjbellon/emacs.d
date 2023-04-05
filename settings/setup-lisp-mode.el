@@ -27,8 +27,6 @@
 (add-hook 'lisp-mode-hook 'enable-paredit-mode)
 (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
 
-(slime-mode)
-
 ;; setup eval inferior lisp in slime
 ;; (define-key global-map (kbd "C-c C-e") 'slime-eval-last-expression)
 

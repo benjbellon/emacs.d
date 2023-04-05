@@ -13,6 +13,8 @@
 ;; TRACK: https://github.com/emacs-lsp/lsp-ui/issues/613
 (setq lsp-ui-doc-enable nil)
 (setq lsp-clients-clangd-args '("--compile-commands-dir=build"))
+(setq lsp-disabled-clients '())
+
 
 (lsp-treemacs-sync-mode 1)
 
@@ -24,6 +26,7 @@
 (add-hook 'python-mode-hook #'lsp)
 (add-hook 'rustic-mode #'lsp)
 (add-hook 'web-mode-hook #'lsp)
+(add-hook 'typescript-mode-hook #'lsp)
 
 (add-hook 'lsp-after-open-hook 'lsp-ui-mode)
 

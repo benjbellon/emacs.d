@@ -85,6 +85,7 @@
      ido-vertical-mode
      jinja2-mode
      json
+     just-mode
      lsp-dart
      lsp-haskell
      lsp-mode
