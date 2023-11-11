@@ -51,7 +51,6 @@
    '(ace-window
      blacken
      cargo
-     cider
      company
      company-c-headers
      company-glsl
@@ -78,8 +77,6 @@
      flycheck-haskell
      flycheck-pos-tip
      go-mode
-     haskell-mode
-     hasklig-mode
      highlight-escape-sequences
      hl-todo
      ido-vertical-mode
@@ -114,7 +111,6 @@
      smart-mode-line
      solarized-theme
      swift-mode
-     swift-playground-mode
      systemd
      terraform-mode
      treemacs
@@ -165,7 +161,6 @@
 (require 'setup-dockerfile-mode)
 (require 'setup-flycheck)
 (require 'setup-go-mode)
-(require 'setup-haskell-mode)
 (require 'setup-ido)
 (require 'setup-keychain-environment)
 (require 'setup-lisp-mode)
@@ -183,6 +178,7 @@
 (require 'setup-slime-mode)
 (require 'setup-terraform-mode)
 (require 'setup-treemacs)
+(require 'setup-treesitter)
 (require 'setup-typescript-mode)
 (require 'setup-txt-mode)
 (require 'setup-web-mode)
