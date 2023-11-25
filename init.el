@@ -7,7 +7,6 @@
 
 ;;; Commentary:
 
-;;; This config builds an instance of Emacs personalized for its author.
 ;;; A few things of interest:
 ;;; 1. C-x C-c is overriden in the GUI so it redirects to the default
 ;;;    *ansi-term* buffer. If you wish for this override while using
@@ -22,181 +21,210 @@
 ;;;        GPG_AGENT_INFO
 ;;;
 ;;; Code:
-;; Suppress splash screen
+(setq inhibit-startup-message t) 
+(setq initial-scratch-message nil)
 
-;; Are we on a mac?
-(setq is-mac (equal system-type 'darwin))
-(setq create-lockfiles nil)
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
+(require 'package)
 (package-initialize)
 
-(setq inhibit-startup-message t)
+(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
-(add-to-list 'load-path (expand-file-name "settings" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "utils" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "templates/auto-insert" user-emacs-directory))
+(when (not (package-installed-p 'use-package)) (package-install 'use-package))
 
-(require 'setup-package)
+(use-package emacs
+  :init
+  (setq is-mac (equal system-type 'darwin))
+  (setq enable-recursive-minibuffers t)
 
-;; Write backup files to own directory
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name
-		 (concat user-emacs-directory "backups")))))
+  (set-face-attribute 'default nil :font "Source Code Pro Medium" :height 90)    
 
-(defun init-install-packages()
-  (packages-install
-   '(ace-window
-     blacken
-     cargo
-     company
-     company-c-headers
-     company-glsl
-     company-terraform
-     clojure-mode
-     clojure-mode-extra-font-locking
-     clojure-snippets
-     cmake-mode
-     csv-mode
-     cquery
-     dash
-     dap-mode
-     dart-mode
-     dockerfile-mode
-     elm-mode
-     emojify
-     erlang
-     exec-path-from-shell
-     flutter
-     flx-ido
-     flycheck
-     flycheck-clangcheck
-     flycheck-clojure
-     flycheck-haskell
-     flycheck-pos-tip
-     go-mode
-     highlight-escape-sequences
-     hl-todo
-     ido-vertical-mode
-     jinja2-mode
-     json
-     just-mode
-     lsp-dart
-     lsp-haskell
-     lsp-mode
-     lsp-ui
-     magit
-     markdown-mode
-     modern-cpp-font-lock
-     mu4e-alert
-     multiple-cursors
-     nasm-mode
-     nginx-mode
-     paredit
-     pass
-     play-routes-mode
-     projectile
-     projectile-ripgrep
-     protobuf-mode
-     purescript-mode
-     pyvenv
-     rainbow-mode
-     restclient
-     rustic
-     rust-playground
-     sbt-mode
-     slime
-     smart-mode-line
-     solarized-theme
-     swift-mode
-     systemd
-     terraform-mode
-     treemacs
-     treemacs-projectile
-     tuareg
-     typescript-mode
-     uuidgen
-     visual-regexp
-     visual-regexp-steroids
-     web-mode
-     which-key
-     yaml-mode
-     yasnippet)))
+  (setq create-lockfiles nil)
+  (setq backup-directory-alist
+	`(("." . (expand-file-name
+		  (concat user-emacs-directory "backups")))))
+  (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+  
 
-(condition-case nil
-    (init-install-packages)
-  (error
-   (package-refresh-contents)
-   (init-install-packages)))
+  ;; Custom load paths, files, and directories
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (setq templates-dir (expand-file-name "templates" user-emacs-directory))
 
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file)
+  ;; Can't fix everything for everyone...
+  (setq byte-compile-warnings '(not obsolete))
+  (setq warning-suppress-log-types '((comp) (bytecomp)))
+  (setq native-comp-async-report-warnings-errors 'silent)
 
-;; Are we in gui or terminal?
-(if (display-graphic-p)
-    ;; load the theme so we don't have a block of white for too long upon startup
-    (load-theme 'solarized-dark t))
+  (setq x-select-enable-clipboard t)
+  (setq dired-listing-switches "-lisah")
 
-(require 'visual-regexp)
-(require 'visual-regexp-steroids)
+  (setq hl-line-mode 0)
+  (setq indent-tabs-mode nil)
+  
+  (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+  (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-(require 'sane-defaults)
+  (defalias 'yes-or-no-p 'y-or-n-p)  
 
-(when is-mac
-  (require-package 'exec-path-from-shell)
-  (exec-path-from-shell-initialize))
+  (add-to-list 'load-path templates-dir)
 
-(add-to-list 'exec-path "/usr/local/bin")
+  (load custom-file)
 
-(require 'setup-ace-window-mode)
-(require 'setup-asm-mode)
-(require 'setup-auto-insert-mode)
-(require 'setup-avy-mode)
-(require 'setup-c++-mode)
-(require 'setup-clojure-mode)
-(require 'setup-company-mode)
-(require 'setup-dap-mode)
-(require 'setup-dockerfile-mode)
-(require 'setup-flycheck)
-(require 'setup-go-mode)
-(require 'setup-ido)
-(require 'setup-keychain-environment)
-(require 'setup-lisp-mode)
-(require 'setup-lsp-mode)
-(require 'setup-magit)
-(require 'setup-markdown-mode)
-;;(require 'setup-mu4e)
-(require 'setup-multiple-cursors)
-(require 'setup-org-mode)
-(require 'setup-projectile-mode)
-(require 'setup-protobuf-mode)
-(require 'setup-purescript-mode)
-(require 'setup-python-mode)
-(require 'setup-rustic-mode)
-(require 'setup-slime-mode)
-(require 'setup-terraform-mode)
-(require 'setup-treemacs)
-(require 'setup-treesitter)
-(require 'setup-typescript-mode)
-(require 'setup-txt-mode)
-(require 'setup-web-mode)
-(require 'setup-yaml-mode)
-(require 'setup-yasnippet)
-(require '.yas-setup)
+  :bind (
+	 ("C-x C-b" . ibuffer)
+	 ("C--" . undo)
+	 ("C-x C-d" . find-file))
+  :hook ((prog-mode-hook . 'hl-todo-mode))
 
-;; enable pass as our auth source
-(auth-source-pass-enable)
+  :config
+  ;; Override C-x C-c to open the default ansi-term buffer
+  (if (display-graphic-p)
+      (let ((ansi-buffer "*ansi-term*")
+	    (quit-command "C-x C-c"))
+	(if (not (get-buffer ansi-buffer))
+	    (ansi-term "/bin/bash"))
+	(define-key global-map (kbd quit-command)
+		    (lambda () (interactive)
+		      (delete-other-windows)
+		      (switch-to-buffer "*ansi-term*"))))))
 
-;; utility globals
-(require 'fetch-includes)
-(exec-path-from-shell-initialize)
+(use-package company
+  :ensure t
+  :init
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 1)
+  :config
+  (add-to-list 'company-backends 'company-capf)
+  (global-company-mode))
 
-;; full power
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
+(use-package consult
+  :ensure t
+  :bind (
+	 ("C-c l f" . consult-focus-lines)
+	 ("C-c l s" . consult-ripgrep))  
+  :hook (completion-list-mode . consult-preview-at-point-mode))
 
-(keychain-refresh-environment)
-;;; init.el ends here
+(use-package embark
+  :ensure t
+  :bind (("C-c e ." . embark-act)))
+
+(use-package embark-consult
+  :ensure t
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package keychain-environment
+  :ensure t
+  :config
+  (keychain-refresh-environment))
+
+(use-package flycheck
+  :ensure t)
+
+(use-package lsp-mode
+  :ensure t
+  :commands lsp)
+
+(use-package magit
+  :ensure t
+  :bind ("C-x g" . magit-status))
+
+(use-package marginalia
+  :ensure t
+  :bind (:map minibuffer-local-map
+	      ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
+
+(use-package multiple-cursors
+  :ensure t
+  :init
+  (setq mc/always-run-for-all t)
+  :bind (("C-c m i" . mc/insert-numbers)
+	 ("C-c m l" . mc/edit-lines)    
+	 ("C-c m m" . mc/mark-all-like-this)
+	 ("C-c m n" . mc/mark-next-like-this)
+	 ("C-c m p" . mc/mark-previous-like-this)    
+	 ("C-c m r r" . mc/mark-all-in-region-regexp)))
+
+(use-package paredit
+  :ensure t
+  :hook
+  (lisp-mode . paredit-mode) 
+  (emacs-lisp-mode . paredit-mode))
+
+(use-package projectile
+  :ensure t
+  :init (projectile-mode +1)
+  :bind (("C-c p" . 'projectile-command-map)
+	 ("C-c p s g" . 'projectile-ripgrep)
+	 ("C-c p s r" . 'projectile-replace-regexp)))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides'((file (styles basic partial-completion)))))
+
+(use-package rust-mode
+  :ensure t
+  :bind ((:map rust-mode-map
+	       ("C-c C-c C-c" . rust-compile)
+	       ("C-c C-c C-k" . rust-check)
+	       ("C-c C-c C-t" . rust-test)
+	       ("C-c C-c C-r" . rust-run)))
+  :init
+  (setq rust-format-on-save t)  
+  :hook (rust-mode . lsp))
+
+(use-package solarized-theme
+  :ensure t
+  :config
+  (load-theme 'solarized-dark t))
+
+(use-package tree-sitter
+  :init
+  (setq treesit-language-source-alist
+	'((bash "https://github.com/tree-sitter/tree-sitter-bash")
+	  (cmake "https://github.com/uyha/tree-sitter-cmake")
+	  (css "https://github.com/tree-sitter/tree-sitter-css")
+	  (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+	  (go "https://github.com/tree-sitter/tree-sitter-go")
+	  (haskell "https://github.com/tree-sitter/tree-sitter-haskell.git")
+	  (html "https://github.com/tree-sitter/tree-sitter-html")
+	  (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+	  (json "https://github.com/tree-sitter/tree-sitter-json")
+	  (make "https://github.com/alemuller/tree-sitter-make")
+	  (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+	  (python "https://github.com/tree-sitter/tree-sitter-python")
+	  (rust "https://github.com/tree-sitter/tree-sitter-rust.git")
+	  (toml "https://github.com/tree-sitter/tree-sitter-toml")
+	  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+	  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+	  (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode)
+  ;; TODO: install if not exists...
+  :hook (tree-sitter-after-on-hook . tree-sitter-hl-mode))
+
+(use-package undo-tree
+  :ensure t)
+
+(use-package vertico
+  :ensure t
+  :bind (:map vertico-map
+	      ("C-d" . 'vertico-exit)
+	      ("DEL" . 'vertico-directory-delete-char))
+  :init
+  (vertico-mode)
+  :hook (rfn-eshadow-update-overlay-hook . vertico-directory-tidy)
+  :custom
+  (vertico-count 25)
+  (vertico-resize t))
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode 1))
