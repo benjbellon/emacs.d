@@ -161,6 +161,9 @@
 	 ("C-c p s g" . 'projectile-ripgrep)
 	 ("C-c p s r" . 'projectile-replace-regexp)))
 
+(use-package projectile-ripgrep
+  :ensure t)
+
 (use-package orderless
   :ensure t
   :custom
@@ -214,15 +217,19 @@
 
 (use-package vertico
   :ensure t
-  :bind (:map vertico-map
-	      ("C-d" . 'vertico-exit)
-	      ("DEL" . 'vertico-directory-delete-char))
   :init
   (vertico-mode)
-  :hook (rfn-eshadow-update-overlay-hook . vertico-directory-tidy)
   :custom
   (vertico-count 25)
   (vertico-resize t))
+
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  :bind (:map vertico-map
+	      ("C-d" . 'vertico-exit)
+	      ("DEL" . 'vertico-directory-delete-char))  
+  :hook (rfn-eshadow-update-overlay-hook . vertico-directory-tidy))
 
 (use-package which-key
   :ensure t
