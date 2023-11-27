@@ -50,6 +50,7 @@
   ;; Custom load paths, files, and directories
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (setq templates-dir (expand-file-name "templates" user-emacs-directory))
+  (setq org-dir (expand-file-name ".org"))
 
   (add-to-list 'load-path templates-dir)
 
@@ -163,6 +164,14 @@
   :init
     (global-hl-todo-mode))
 
+(use-package jinx
+  :ensure t
+  :hook ((text-mode . jinx-mode)
+	 (org-mode . jinx-mode))
+  :bind (("<f2>" . 'jinx-correct)
+	 ("M-$" . 'jinx-correct)
+	 ("C-M-$" . 'sjinx-languages)))
+
 (use-package lsp-mode
   :ensure t
   :commands lsp)
@@ -225,6 +234,15 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides'((file (styles basic partial-completion)))))
+
+(use-package org-mode
+  :mode "\\.org$"
+  :bind ("C-c o c" . 'org-capture)
+  :custom
+  (org-todo-keywords `((sequence "Backlog(b)" "Todo(t)" "In Progress(i)" "|" "Done(d)" "Cancelled(c)")))
+  (org-capture-templates
+   `(("i" "Inbox" entry (file+headline ,(concat org-dir "/inbox.org") "Inbox") "* Todo %?\nCreated: %T\n" :empty-lines 0)
+     ("j" "Journal Entry" entry (file+datetree ,(concat org-dir "/journal.org")) "* %?" :empty-lines 0))))
 
 (use-package rust-mode
   :ensure t
