@@ -21,7 +21,7 @@
 ;;;        GPG_AGENT_INFO
 ;;;
 ;;; Code:
-(setq inhibit-startup-message t) 
+(setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 
 (require 'package)
@@ -38,18 +38,24 @@
   (setq is-mac (equal system-type 'darwin))
   (setq enable-recursive-minibuffers t)
 
-  (set-face-attribute 'default nil :font "Source Code Pro Medium" :height 90)    
+  (set-face-attribute 'default nil :font "Source Code Pro Medium" :height 90)
 
   (setq create-lockfiles nil)
   (setq backup-directory-alist
 	`(("." . (expand-file-name
 		  (concat user-emacs-directory "backups")))))
   (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
-  
+
 
   ;; Custom load paths, files, and directories
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (setq templates-dir (expand-file-name "templates" user-emacs-directory))
+
+  (add-to-list 'load-path templates-dir)
+
+  (if (file-exists-p custom-file)
+      (load custom-file)
+    (message "custom.el does not yet exist, cannot load"))
 
   ;; Can't fix everything for everyone...
   (setq byte-compile-warnings '(not obsolete))
@@ -61,22 +67,20 @@
 
   (setq hl-line-mode 0)
   (setq indent-tabs-mode nil)
-  
+
   (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
   (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
   (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-  (defalias 'yes-or-no-p 'y-or-n-p)  
+  (defalias 'yes-or-no-p 'y-or-n-p)
 
-  (add-to-list 'load-path templates-dir)
 
-  (load custom-file)
+  (global-hl-todo-mode)
 
   :bind (
 	 ("C-x C-b" . ibuffer)
 	 ("C--" . undo)
 	 ("C-x C-d" . find-file))
-  :hook ((prog-mode-hook . 'hl-todo-mode))
 
   :config
   ;; Override C-x C-c to open the default ansi-term buffer
@@ -88,7 +92,24 @@
 	(define-key global-map (kbd quit-command)
 		    (lambda () (interactive)
 		      (delete-other-windows)
-		      (switch-to-buffer "*ansi-term*"))))))
+		      (switch-to-buffer "*ansi-term*")))))
+  :hook (before-save . delete-trailing-whitespace))
+
+(use-package ace-window
+  :ensure t
+  :bind ("C-x o" . ace-window))
+
+(use-package apheleia
+  :ensure t
+  :config
+  (setf (alist-get 'prettier apheleia-formatters) '("apheleia-npx" "prettier" "--stdin-filepath" filepath)))
+
+(use-package avy
+  :ensure t
+  :init
+  (setq aw-keys '(?a ?s ?d ?e ?f ?g ?h ?j ?k ?l))
+  :bind (("M-g c" . avy-goto-char-timer)
+         ("M-g l" . avy-goto-line)))
 
 (use-package company
   :ensure t
@@ -102,17 +123,20 @@
 (use-package consult
   :ensure t
   :bind (
-	 ("C-c l f" . consult-focus-lines)
-	 ("C-c l s" . consult-ripgrep))  
+	 ("C-c l l" . consult-focus-lines)
+	 ("C-c l f" . consult-ripgrep))
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
 (use-package embark
   :ensure t
-  :bind (("C-c e ." . embark-act)))
+  :bind (("C-." . embark-act)))
 
 (use-package embark-consult
   :ensure t
   :hook (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package just-mode
+  :ensure t)
 
 (use-package keychain-environment
   :ensure t
@@ -142,16 +166,19 @@
   :init
   (setq mc/always-run-for-all t)
   :bind (("C-c m i" . mc/insert-numbers)
-	 ("C-c m l" . mc/edit-lines)    
+	 ("C-c m l" . mc/edit-lines)
 	 ("C-c m m" . mc/mark-all-like-this)
 	 ("C-c m n" . mc/mark-next-like-this)
-	 ("C-c m p" . mc/mark-previous-like-this)    
+	 ("C-c m p" . mc/mark-previous-like-this)
 	 ("C-c m r r" . mc/mark-all-in-region-regexp)))
+
+(use-package nginx-mode
+  :ensure t)
 
 (use-package paredit
   :ensure t
   :hook
-  (lisp-mode . paredit-mode) 
+  (lisp-mode . paredit-mode)
   (emacs-lisp-mode . paredit-mode))
 
 (use-package projectile
@@ -166,6 +193,8 @@
 
 (use-package orderless
   :ensure t
+  :init
+  (setq orderless-matching-styles '(orderless-flex))
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides'((file (styles basic partial-completion)))))
@@ -178,7 +207,7 @@
 	       ("C-c C-c C-t" . rust-test)
 	       ("C-c C-c C-r" . rust-run)))
   :init
-  (setq rust-format-on-save t)  
+  (setq rust-format-on-save t)
   :hook (rust-mode . lsp))
 
 (use-package solarized-theme
@@ -186,50 +215,49 @@
   :config
   (load-theme 'solarized-dark t))
 
-(use-package tree-sitter
-  :init
-  (setq treesit-language-source-alist
-	'((bash "https://github.com/tree-sitter/tree-sitter-bash")
-	  (cmake "https://github.com/uyha/tree-sitter-cmake")
-	  (css "https://github.com/tree-sitter/tree-sitter-css")
-	  (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-	  (go "https://github.com/tree-sitter/tree-sitter-go")
-	  (haskell "https://github.com/tree-sitter/tree-sitter-haskell.git")
-	  (html "https://github.com/tree-sitter/tree-sitter-html")
-	  (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-	  (json "https://github.com/tree-sitter/tree-sitter-json")
-	  (make "https://github.com/alemuller/tree-sitter-make")
-	  (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-	  (python "https://github.com/tree-sitter/tree-sitter-python")
-	  (rust "https://github.com/tree-sitter/tree-sitter-rust.git")
-	  (toml "https://github.com/tree-sitter/tree-sitter-toml")
-	  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-	  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-	  (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
-  :config
-  (require 'tree-sitter-langs)
-  (global-tree-sitter-mode)
-  ;; TODO: install if not exists...
-  :hook (tree-sitter-after-on-hook . tree-sitter-hl-mode))
-
 (use-package undo-tree
   :ensure t)
 
 (use-package vertico
   :ensure t
   :init
+  (defun my/go-home ()
+    (interactive)
+    (cond
+     ((looking-back "/") (insert "~/"))
+     (:else (insert "~"))))
   (vertico-mode)
   :custom
   (vertico-count 25)
-  (vertico-resize t))
+  (vertico-resize t)
+  :bind (:map vertico-map ("~" . 'my/go-home)))
 
 (use-package vertico-directory
   :after vertico
   :ensure nil
   :bind (:map vertico-map
 	      ("C-d" . 'vertico-exit)
-	      ("DEL" . 'vertico-directory-delete-char))  
-  :hook (rfn-eshadow-update-overlay-hook . vertico-directory-tidy))
+	      ("DEL" . 'vertico-directory-delete-char))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+(use-package web-mode
+  :ensure t
+  :mode (("\\.svelte?\\'" . web-mode)
+	 ("\\.html?\\'" . web-mode)
+	 ("\\.js?\\'" . web-mode))
+  :config
+  (setq web-mode-engines-alist '(("svelte" . ".svelte$")))
+
+  :custom
+  (web-mode-code-indent-offset 2)
+  (web-mode-css-indent-offset 2)
+  (web-mode-markup-indent-offset 2)
+  (web-mode-script-padding 2)
+  (web-mode-style-padding 2)
+  (web-mode-block-padding 2)
+
+  :hook ((web-mode . lsp)
+         (web-mode . apheleia-mode)))
 
 (use-package which-key
   :ensure t

@@ -26,3 +26,4 @@ projects
 bookmarks
 tree-sitter
 custom.el
+async-bytecomp.log
