@@ -74,13 +74,12 @@
 
   (defalias 'yes-or-no-p 'y-or-n-p)
 
-
-  (global-hl-todo-mode)
-
   :bind (
-	 ("C-x C-b" . ibuffer)
-	 ("C--" . undo)
-	 ("C-x C-d" . find-file))
+	 ("C-x C-b" . 'ibuffer)
+	 ("C--" . 'undo)
+	 ("C-x C-d" . 'find-file)
+         ("C-x r m" . 'bookmark-set)
+         ("C-x r d" . 'bookmark-delete))
 
   :config
   ;; Override C-x C-c to open the default ansi-term buffer
@@ -97,7 +96,9 @@
 
 (use-package ace-window
   :ensure t
-  :bind ("C-x o" . ace-window))
+  :init
+  (setq aw-keys '(?a ?s ?d ?e ?f ?g ?h ?j ?k ?l))
+  :bind ("C-x o" . 'ace-window))
 
 (use-package apheleia
   :ensure t
@@ -107,9 +108,8 @@
 (use-package avy
   :ensure t
   :init
-  (setq aw-keys '(?a ?s ?d ?e ?f ?g ?h ?j ?k ?l))
-  :bind (("M-g c" . avy-goto-char-timer)
-         ("M-g l" . avy-goto-line)))
+  :bind (("M-g a a" . 'avy-goto-char-timer)
+         ("M-g a l" . 'avy-goto-line)))
 
 (use-package company
   :ensure t
@@ -122,9 +122,15 @@
 
 (use-package consult
   :ensure t
-  :bind (
-	 ("C-c l l" . consult-focus-lines)
-	 ("C-c l f" . consult-ripgrep))
+  :bind (("C-c c b" . 'consult-bookmark)
+	 ("C-c c f" . 'consult-ripgrep)
+	 ("C-c c l" . 'consult-focus-lines)
+         ("C-c c o" . 'consult-outline)
+         ("C-c c r l" . 'consult-register-load)
+         ("C-c c r s" . 'consult-register-store)
+         ("C-c c r w" . 'consult-register)
+	 ("C-x b" . 'consult-buffer)
+         ("M-g g" . 'consult-goto-line))
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
 (use-package embark
@@ -143,8 +149,19 @@
   :config
   (keychain-refresh-environment))
 
+(use-package fountain-mode
+  :ensure t
+  :mode "\\.fountain?\\'"
+  :config
+  :hook (fountain-mode . olivetti-mode))
+
 (use-package flycheck
   :ensure t)
+
+(use-package hl-todo
+  :ensure t
+  :init
+    (global-hl-todo-mode))
 
 (use-package lsp-mode
   :ensure t
@@ -152,12 +169,12 @@
 
 (use-package magit
   :ensure t
-  :bind ("C-x g" . magit-status))
+  :bind ("C-x g" . 'magit-status))
 
 (use-package marginalia
   :ensure t
   :bind (:map minibuffer-local-map
-	      ("M-A" . marginalia-cycle))
+	      ("M-A" . 'marginalia-cycle))
   :init
   (marginalia-mode))
 
@@ -165,14 +182,17 @@
   :ensure t
   :init
   (setq mc/always-run-for-all t)
-  :bind (("C-c m i" . mc/insert-numbers)
-	 ("C-c m l" . mc/edit-lines)
-	 ("C-c m m" . mc/mark-all-like-this)
-	 ("C-c m n" . mc/mark-next-like-this)
-	 ("C-c m p" . mc/mark-previous-like-this)
-	 ("C-c m r r" . mc/mark-all-in-region-regexp)))
+  :bind (("C-c m i" . 'mc/insert-numbers)
+	 ("C-c m l" . 'mc/edit-lines)
+	 ("C-c m m" . 'mc/mark-all-like-this)
+	 ("C-c m n" . 'mc/mark-next-like-this)
+	 ("C-c m p" . 'mc/mark-previous-like-this)
+	 ("C-c m r r" . 'mc/mark-all-in-region-regexp)))
 
 (use-package nginx-mode
+  :ensure t)
+
+(use-package git-timemachine
   :ensure t)
 
 (use-package paredit
@@ -191,6 +211,13 @@
 (use-package projectile-ripgrep
   :ensure t)
 
+(use-package olivetti
+  :ensure t
+  :custom
+  (olivetti-body-width 120)
+  :mode (("\\.txt?\\'" . olivetti-mode)
+	 ("\\README.md\\'" . olivetti-mode)))
+
 (use-package orderless
   :ensure t
   :init
@@ -202,10 +229,10 @@
 (use-package rust-mode
   :ensure t
   :bind ((:map rust-mode-map
-	       ("C-c C-c C-c" . rust-compile)
-	       ("C-c C-c C-k" . rust-check)
-	       ("C-c C-c C-t" . rust-test)
-	       ("C-c C-c C-r" . rust-run)))
+	       ("C-c C-c C-c" . 'rust-compile)
+	       ("C-c C-c C-k" . 'rust-check)
+	       ("C-c C-c C-t" . 'rust-test)
+	       ("C-c C-c C-r" . 'rust-run)))
   :init
   (setq rust-format-on-save t)
   :hook (rust-mode . lsp))
@@ -258,6 +285,16 @@
 
   :hook ((web-mode . lsp)
          (web-mode . apheleia-mode)))
+
+(use-package visual-regexp
+  :ensure t
+  :bind (("C-s" . 'vr/isearch-forward)
+	 ("C-r" . 'vr/isearch-backward)
+	 ("C-M-r" . 'vr/replace)))
+
+(use-package visual-regexp-steroids
+  :after visual-regexp
+  :ensure t)
 
 (use-package which-key
   :ensure t
