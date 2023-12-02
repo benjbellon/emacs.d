@@ -225,7 +225,8 @@
   :custom
   (olivetti-body-width 120)
   :mode (("\\.txt?\\'" . olivetti-mode)
-	 ("\\README.md\\'" . olivetti-mode)))
+	 ("\\README.md\\'" . olivetti-mode)
+	 ("\\.org?\\'" . olivetti-mode)))
 
 (use-package orderless
   :ensure t
@@ -235,14 +236,29 @@
   (completion-styles '(orderless basic))
   (completion-category-overrides'((file (styles basic partial-completion)))))
 
+(use-package org-bullets
+  :ensure t
+  :after org-mode)
+
 (use-package org-mode
   :mode "\\.org$"
   :bind ("C-c o c" . 'org-capture)
+  :hook ((org-mode . org-bullets-mode)
+         (org-mode . olivetti-mode)
+         (org-mode . hl-todo-mode))
   :custom
-  (org-todo-keywords `((sequence "Backlog(b)" "Todo(t)" "In Progress(i)" "|" "Done(d)" "Cancelled(c)")))
+  (org-hide-emphasis-markers t)
+  (org-todo-keywords
+   `((sequence "Backlog(b)" "Todo(t)" "In Progress(i)" "|" "Done(d)" "Cancelled(c)")))
   (org-capture-templates
-   `(("i" "Inbox" entry (file+headline ,(concat org-dir "/inbox.org") "Inbox") "* Todo %?\nCreated: %T\n" :empty-lines 0)
-     ("j" "Journal Entry" entry (file+datetree ,(concat org-dir "/journal.org")) "* %?" :empty-lines 0))))
+   `(("i" "Inbox"
+      entry (file+headline ,(concat org-dir "/inbox.org") "Inbox")
+      "* Todo %?\nCreated: %T\n"
+      :empty-lines 0)
+     ("j" "Journal Entry"
+      entry (file+datetree ,(concat org-dir "/journal.org"))
+      "* %?"
+      :empty-lines 0))))
 
 (use-package rust-mode
   :ensure t
@@ -289,7 +305,8 @@
   :ensure t
   :mode (("\\.svelte?\\'" . web-mode)
 	 ("\\.html?\\'" . web-mode)
-	 ("\\.js?\\'" . web-mode))
+	 ("\\.js?\\'" . web-mode)
+	 ("\\.ts?\\'" . web-mode))
   :config
   (setq web-mode-engines-alist '(("svelte" . ".svelte$")))
 
@@ -318,3 +335,8 @@
   :ensure t
   :config
   (which-key-mode 1))
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode t))
