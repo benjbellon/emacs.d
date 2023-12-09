@@ -112,6 +112,9 @@
   :bind (("M-g a a" . 'avy-goto-char-timer)
          ("M-g a l" . 'avy-goto-line)))
 
+(use-package cargo-mode
+  :ensure t)
+
 (use-package company
   :ensure t
   :init
@@ -141,6 +144,16 @@
 (use-package embark-consult
   :ensure t
   :hook (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package git-timemachine
+  :ensure t)
+
+(use-package go-mode
+  :after lsp-mode
+  :ensure t
+  :hook ((go-mode . lsp-mode)
+	 (before-save . lsp-format-buffer)
+	 (before-save . lsp-organize-imports)))
 
 (use-package just-mode
   :ensure t)
@@ -201,14 +214,14 @@
 (use-package nginx-mode
   :ensure t)
 
-(use-package git-timemachine
-  :ensure t)
-
 (use-package paredit
   :ensure t
   :hook
   (lisp-mode . paredit-mode)
   (emacs-lisp-mode . paredit-mode))
+
+(use-package pest-mode
+  :ensure t)
 
 (use-package projectile
   :ensure t
@@ -260,16 +273,19 @@
       "* %?"
       :empty-lines 0))))
 
-(use-package rust-mode
-  :ensure t
-  :bind ((:map rust-mode-map
-	       ("C-c C-c C-c" . 'rust-compile)
-	       ("C-c C-c C-k" . 'rust-check)
-	       ("C-c C-c C-t" . 'rust-test)
-	       ("C-c C-c C-r" . 'rust-run)))
-  :init
-  (setq rust-format-on-save t)
-  :hook (rust-mode . lsp))
+(use-package rustic
+  :ensure t)
+
+;; (use-package rust-mode
+;;   :ensure t
+;;   :bind ((:map rust-mode-map
+;; 	       ("C-c C-c C-c" . 'rust-compile)
+;; 	       ("C-c C-c C-k" . 'rust-check)
+;; 	       ("C-c C-c C-t" . 'rust-test)
+;; 	       ("C-c C-c C-r" . 'rust-run)))
+;;   :init
+;;   (setq rust-format-on-save t)
+;;   :hook (rust-mode . lsp))
 
 (use-package solarized-theme
   :ensure t
@@ -301,6 +317,19 @@
 	      ("DEL" . 'vertico-directory-delete-char))
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
+(use-package uuidgen
+  :ensure t)
+
+(use-package visual-regexp
+  :ensure t
+  :bind (("C-s" . 'vr/isearch-forward)
+	 ("C-r" . 'vr/isearch-backward)
+	 ("C-M-r" . 'vr/replace)))
+
+(use-package visual-regexp-steroids
+  :after visual-regexp
+  :ensure t)
+
 (use-package web-mode
   :ensure t
   :mode (("\\.svelte?\\'" . web-mode)
@@ -320,16 +349,6 @@
 
   :hook ((web-mode . lsp)
          (web-mode . apheleia-mode)))
-
-(use-package visual-regexp
-  :ensure t
-  :bind (("C-s" . 'vr/isearch-forward)
-	 ("C-r" . 'vr/isearch-backward)
-	 ("C-M-r" . 'vr/replace)))
-
-(use-package visual-regexp-steroids
-  :after visual-regexp
-  :ensure t)
 
 (use-package which-key
   :ensure t
