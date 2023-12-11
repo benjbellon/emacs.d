@@ -249,15 +249,10 @@
   (completion-styles '(orderless basic))
   (completion-category-overrides'((file (styles basic partial-completion)))))
 
-(use-package org-bullets
-  :ensure t
-  :after org-mode)
-
 (use-package org-mode
   :mode "\\.org$"
   :bind ("C-c o c" . 'org-capture)
-  :hook ((org-mode . org-bullets-mode)
-         (org-mode . olivetti-mode)
+  :hook ((org-mode . olivetti-mode)
          (org-mode . hl-todo-mode))
   :custom
   (org-hide-emphasis-markers t)
@@ -266,7 +261,7 @@
   (org-capture-templates
    `(("i" "Inbox"
       entry (file+headline ,(concat org-dir "/inbox.org") "Inbox")
-      "* Todo %?\nCreated: %T\n"
+      "* Todo [#C] %?\nCreated: %T\n"
       :empty-lines 0)
      ("j" "Journal Entry"
       entry (file+datetree ,(concat org-dir "/journal.org"))
