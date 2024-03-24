@@ -268,19 +268,11 @@
       "* %?"
       :empty-lines 0))))
 
-(use-package rustic
+(use-package restclient
   :ensure t)
 
-;; (use-package rust-mode
-;;   :ensure t
-;;   :bind ((:map rust-mode-map
-;; 	       ("C-c C-c C-c" . 'rust-compile)
-;; 	       ("C-c C-c C-k" . 'rust-check)
-;; 	       ("C-c C-c C-t" . 'rust-test)
-;; 	       ("C-c C-c C-r" . 'rust-run)))
-;;   :init
-;;   (setq rust-format-on-save t)
-;;   :hook (rust-mode . lsp))
+(use-package rustic
+  :ensure t)
 
 (use-package solarized-theme
   :ensure t
