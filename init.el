@@ -57,6 +57,7 @@
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (setq templates-dir (expand-file-name "templates" user-emacs-directory))
   (setq org-dir (expand-file-name "~/.org"))
+  (setq org-dir-journal (expand-file-name "journal" org-dir))
 
   (add-to-list 'load-path templates-dir)
 
@@ -263,14 +264,29 @@
   :init
   (setq org-ai-openai-api-token (password-store-get "openai/api-key")))
 
+(use-package org-superstar
+  :ensure t
+  :init)
+
+(use-package org-journal
+  :ensure t
+  :init
+  (setq org-journal-dir org-dir-journal)
+  (setq org-journal-file-type 'weekly)
+  (setq org-journal-file-format "%Y%m%d.org")
+  (setq org-journal-enable-agenda-integration t))
+
 (use-package org-mode
-  :after org-ai
+  :after (:all org-ai org-journal)
   :mode "\\.org$"
-  :bind (("C-c o c" . 'org-capture)
-	 ("C-c o o" .  my/org-open))
+  :bind (("C-c o j o" .  'org-journal-open-current-journal-file)
+         ("C-c o j n" . 'org-journal-new-entry)
+	 ("C-c o j t" . 'org-journal-new-scheduled-entry))
+
   :hook ((org-mode . hl-todo-mode)
 	 (org-mode . olivetti-mode)
          (org-mode . org-ai-mode)
+	 (org-mode . org-superstar-mode)
          (org-mode . org-indent-mode))
   :init
   (org-babel-do-load-languages
@@ -417,7 +433,3 @@
   ;; :bind (("<C-tab>" . 'yas-expand))
   :config
   (yas-global-mode t))
-
-(defun my/org-open ()
-  (interactive)
-  (dired org-dir))
