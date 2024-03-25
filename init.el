@@ -9,7 +9,7 @@
 
 ;;; A few things of interest:
 ;;; 1. C-x C-c is overriden in the GUI so it redirects to the default
-;;;    *ansi-term* buffer. If you wish for this override while using
+;;;    *shell* buffer. If you wish for this override while using
 ;;;    Emacs in terminal mode, provide the following ENV variable:
 ;;;      EMACS_OVERRIDE_C_X_C_C
 ;;;
@@ -33,7 +33,13 @@
 
 (when (not (package-installed-p 'use-package)) (package-install 'use-package))
 
+(use-package solarized-theme
+  :ensure t
+  :config
+  (load-theme 'solarized-dark t))
+
 (use-package emacs
+  :after solarized-theme
   :init
   (setq is-mac (equal system-type 'darwin))
   (setq enable-recursive-minibuffers t)
@@ -50,7 +56,7 @@
   ;; Custom load paths, files, and directories
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (setq templates-dir (expand-file-name "templates" user-emacs-directory))
-  (setq org-dir (expand-file-name ".org"))
+  (setq org-dir (expand-file-name "~/.org"))
 
   (add-to-list 'load-path templates-dir)
 
@@ -80,19 +86,20 @@
 	 ("C--" . 'undo)
 	 ("C-x C-d" . 'find-file)
          ("C-x r m" . 'bookmark-set)
-         ("C-x r d" . 'bookmark-delete))
+         ("C-x r d" . 'bookmark-delete)
+	 ("C-l" . 'comint-clear-buffer))
 
   :config
-  ;; Override C-x C-c to open the default ansi-term buffer
+  ;; Override C-x C-c to open the default shell buffer
   (if (display-graphic-p)
-      (let ((ansi-buffer "*ansi-term*")
+      (let ((shell-buffer "*shell*")
 	    (quit-command "C-x C-c"))
-	(if (not (get-buffer ansi-buffer))
-	    (ansi-term "/bin/bash"))
+	(if (not (get-buffer shell-buffer))
+	    (shell))
 	(define-key global-map (kbd quit-command)
 		    (lambda () (interactive)
 		      (delete-other-windows)
-		      (switch-to-buffer "*ansi-term*")))))
+		      (switch-to-buffer "*shell*")))))
   :hook (before-save . delete-trailing-whitespace))
 
 (use-package ace-window
@@ -211,14 +218,107 @@
 	 ("C-c m p" . 'mc/mark-previous-like-this)
 	 ("C-c m r r" . 'mc/mark-all-in-region-regexp)))
 
+(use-package nerd-icons
+  :ensure t
+  :after marginalia
+  :hook (marginalia . nerd-icons-completion-marginalia-setup)
+  :custom
+  (nerd-icons-font-family "Symbols Nerd Font Mono"))
+
+(use-package nerd-icons-completion
+  :ensure t
+  :config
+  (nerd-icons-completion-mode))
+
+(use-package nerd-icons-dired
+  :ensure t
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
 (use-package nginx-mode
   :ensure t)
+
+(use-package ob-restclient
+  :ensure t)
+
+(use-package olivetti
+  :ensure t
+  :custom
+  (olivetti-body-width 250)
+  :mode (("\\.txt?\\'" . olivetti-mode)
+	 ("\\README.md\\'" . olivetti-mode)
+	 ("\\.org?\\'" . olivetti-mode)))
+
+(use-package orderless
+  :ensure t
+  :init
+  (setq orderless-matching-styles '(orderless-flex))
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides'((file (styles basic partial-completion)))))
+
+(use-package org-ai
+  :after password-store
+  :ensure t
+  :init
+  (setq org-ai-openai-api-token (password-store-get "openai/api-key")))
+
+(use-package org-mode
+  :after org-ai
+  :mode "\\.org$"
+  :bind (("C-c o c" . 'org-capture)
+	 ("C-c o o" .  my/org-open))
+  :hook ((org-mode . hl-todo-mode)
+	 (org-mode . olivetti-mode)
+         (org-mode . org-ai-mode)
+         (org-mode . org-indent-mode))
+  :init
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t )
+     (python . t)
+     (restclient .t )
+     (shell . t)))
+
+  (setq org-ai-image-directory (expand-file-name "org-ai-images/" org-dir))
+
+  :custom-face
+  (org-level-1 ((t (:family "Roboto" :height 120))))
+  (org-level-2 ((t (:family "Roboto" :height 110))))
+  (org-level-3 ((t (:family "Roboto" :height 100))))
+  (org-document-title ((t (:family "Roboto Slab" :height 220 :weight medium))))
+  (org-document-info ((t (:family "Roboto Slab" :height 110 :weight medium))))
+
+  :custom
+  (org-hidden-keywords '(title author date startup))
+  (org-startup-folded nil)
+  (org-hide-leading-stars t)
+  (org-hide-emphasis-markers t)
+  (org-num-face nil)
+  (org-level-color-stars-only nil)
+
+  (org-todo-keywords
+   `((sequence "Backlog(b)" "Todo(t)" "In Progress(i)" "|" "Done(d)" "Cancelled(c)")))
+  (org-capture-templates
+   `(("i" "Inbox"
+      entry (file+headline ,(concat org-dir "/inbox.org") "Inbox")
+      "* Todo [#C] %?\nCreated: %T\n"
+      :empty-lines 0)
+     ("j" "Journal Entry"
+      entry (file+datetree ,(concat org-dir "/journal.org"))
+      "* %?"
+      :empty-lines 0)))
+
+  (org-confirm-babel-evaluate nil))
 
 (use-package paredit
   :ensure t
   :hook
   (lisp-mode . paredit-mode)
   (emacs-lisp-mode . paredit-mode))
+
+(use-package password-store
+  :ensure t)
 
 (use-package pest-mode
   :ensure t)
@@ -233,51 +333,21 @@
 (use-package projectile-ripgrep
   :ensure t)
 
-(use-package olivetti
-  :ensure t
-  :custom
-  (olivetti-body-width 120)
-  :mode (("\\.txt?\\'" . olivetti-mode)
-	 ("\\README.md\\'" . olivetti-mode)
-	 ("\\.org?\\'" . olivetti-mode)))
-
-(use-package orderless
-  :ensure t
-  :init
-  (setq orderless-matching-styles '(orderless-flex))
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides'((file (styles basic partial-completion)))))
-
-(use-package org-mode
-  :mode "\\.org$"
-  :bind ("C-c o c" . 'org-capture)
-  :hook ((org-mode . olivetti-mode)
-         (org-mode . hl-todo-mode))
-  :custom
-  (org-hide-emphasis-markers t)
-  (org-todo-keywords
-   `((sequence "Backlog(b)" "Todo(t)" "In Progress(i)" "|" "Done(d)" "Cancelled(c)")))
-  (org-capture-templates
-   `(("i" "Inbox"
-      entry (file+headline ,(concat org-dir "/inbox.org") "Inbox")
-      "* Todo [#C] %?\nCreated: %T\n"
-      :empty-lines 0)
-     ("j" "Journal Entry"
-      entry (file+datetree ,(concat org-dir "/journal.org"))
-      "* %?"
-      :empty-lines 0))))
-
 (use-package restclient
   :ensure t)
 
 (use-package rustic
   :ensure t)
 
-(use-package solarized-theme
+(use-package treemacs
+  :ensure t
+  :bind (("C-c t T" . 'treemacs)
+	 ("C-c t t" . 'treemacs-select-window)))
+
+(use-package treemacs-nerd-icons
   :ensure t
   :config
-  (load-theme 'solarized-dark t))
+  (treemacs-load-theme "nerd-icons"))
 
 (use-package undo-tree
   :ensure t)
@@ -344,5 +414,10 @@
 
 (use-package yasnippet
   :ensure t
+  ;; :bind (("<C-tab>" . 'yas-expand))
   :config
   (yas-global-mode t))
+
+(defun my/org-open ()
+  (interactive)
+  (dired org-dir))
