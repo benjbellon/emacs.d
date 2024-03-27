@@ -82,8 +82,7 @@
 
   (defalias 'yes-or-no-p 'y-or-n-p)
 
-  :bind (
-	 ("C-x C-b" . 'ibuffer)
+  :bind (("C-x C-b" . 'ibuffer)
 	 ("C--" . 'undo)
 	 ("C-x C-d" . 'find-file)
          ("C-x r m" . 'bookmark-set)
@@ -145,8 +144,7 @@
                       ("c r s" . 'consult-register-store)
                       ("c r w" . 'consult-register)))
   :bind (("C-x b" . 'consult-buffer)
-         ("M-g M-g" . b'consult-goto-line)
-         ("M-g g" . b'consult-goto-line))
+         ("M-g M-g" . 'consult-goto-line))
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
 (use-package embark
@@ -324,16 +322,7 @@
   (org-level-color-stars-only nil)
 
   (org-todo-keywords
-   `((sequence "Backlog(b)" "Todo(t)" "In Progress(i)" "|" "Done(d)" "Cancelled(c)")))
-  (org-capture-templates
-   `(("i" "Inbox"
-      entry (file+headline ,(concat org-dir "/inbox.org") "Inbox")
-      "* Todo [#C] %?\nCreated: %T\n"
-      :empty-lines 0)
-     ("j" "Journal Entry"
-      entry (file+datetree ,(concat org-dir "/journal.org"))
-      "* %?"
-      :empty-lines 0)))
+   `((sequence "PAUSED(p)" "TODO(t)" "IN PROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)")))
 
   (org-confirm-babel-evaluate nil))
 
