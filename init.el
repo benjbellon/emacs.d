@@ -134,15 +134,19 @@
 
 (use-package consult
   :ensure t
-  :bind (("C-c c b" . 'consult-bookmark)
-	 ("C-c c f" . 'consult-ripgrep)
-	 ("C-c c l" . 'consult-focus-lines)
-         ("C-c c o" . 'consult-outline)
-         ("C-c c r l" . 'consult-register-load)
-         ("C-c c r s" . 'consult-register-store)
-         ("C-c c r w" . 'consult-register)
-	 ("C-x b" . 'consult-buffer)
-         ("M-g g" . 'consult-goto-line))
+  :bind ((:prefix-map consult-commands
+		      :prefix-docstring "Consult mode quick commands"
+		      :prefix "C-c c"
+                      ("c b" . 'consult-bookmark)
+	              ("c f" . 'consult-ripgrep)
+	              ("c l" . 'consult-focus-lines)
+                      ("c o" . 'consult-outline)
+                      ("c r l" . 'consult-register-load)
+                      ("c r s" . 'consult-register-store)
+                      ("c r w" . 'consult-register)))
+  :bind (("C-x b" . 'consult-buffer)
+         ("M-g M-g" . b'consult-goto-line)
+         ("M-g g" . b'consult-goto-line))
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
 (use-package embark
@@ -191,7 +195,7 @@
 	 (org-mode . jinx-mode))
   :bind (("<f2>" . 'jinx-correct)
 	 ("M-$" . 'jinx-correct)
-	 ("C-M-$" . 'sjinx-languages)))
+	 ("C-M-$" . 'jinx-languages)))
 
 (use-package lsp-mode
   :ensure t
@@ -212,12 +216,15 @@
   :ensure t
   :init
   (setq mc/always-run-for-all t)
-  :bind (("C-c m i" . 'mc/insert-numbers)
-	 ("C-c m l" . 'mc/edit-lines)
-	 ("C-c m m" . 'mc/mark-all-like-this)
-	 ("C-c m n" . 'mc/mark-next-like-this)
-	 ("C-c m p" . 'mc/mark-previous-like-this)
-	 ("C-c m r r" . 'mc/mark-all-in-region-regexp)))
+  :bind (:prefix-map mc-commands
+		     :prefix-docstring "Multiple cursors quick commands"
+		     :prefix "C-c m"
+	 ("i" . 'mc/insert-numbers)
+	 ("l" . 'mc/edit-lines)
+	 ("m" . 'mc/mark-all-like-this)
+	 ("n" . 'mc/mark-next-like-this)
+	 ("p" . 'mc/mark-previous-like-this)
+	 ("r r" . 'mc/mark-all-in-region-regexp)))
 
 (use-package nerd-icons
   :ensure t
@@ -279,9 +286,12 @@
 (use-package org-mode
   :after (:all org-ai org-journal)
   :mode "\\.org$"
-  :bind (("C-c o j o" .  'org-journal-open-current-journal-file)
-         ("C-c o j n" . 'org-journal-new-entry)
-	 ("C-c o j t" . 'org-journal-new-scheduled-entry))
+  :bind (:prefix-map org-commands
+		     :prefix-docstring "Org mode quick commands"
+		     :prefix "C-c o"
+		     ("j o" . 'org-journal-open-current-journal-file)
+		     ("j n" . 'org-journal-new-entry)
+		     ("j t" . 'org-journal-new-scheduled-entry))
 
   :hook ((org-mode . hl-todo-mode)
 	 (org-mode . olivetti-mode)
@@ -357,8 +367,11 @@
 
 (use-package treemacs
   :ensure t
-  :bind (("C-c t T" . 'treemacs)
-	 ("C-c t t" . 'treemacs-select-window)))
+  :bind (:prefix-map treemacs-commands
+                     :prefix-docstring "Treemacs quick commands"
+                     :prefix "C-c t"
+                     ("T" . 'treemacs)
+	             ("t" . 'treemacs-select-window)))
 
 (use-package treemacs-nerd-icons
   :ensure t
