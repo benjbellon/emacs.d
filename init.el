@@ -48,8 +48,7 @@
 
   (setq create-lockfiles nil)
   (setq backup-directory-alist
-	`(("." . (expand-file-name
-		  (concat user-emacs-directory "backups")))))
+	`(("." .  ,(expand-file-name (concat user-emacs-directory "backups")))))
   (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
 
@@ -269,10 +268,6 @@
   :init
   (setq org-ai-openai-api-token (password-store-get "openai/api-key")))
 
-(use-package org-superstar
-  :ensure t
-  :init)
-
 (use-package org-journal
   :ensure t
   :init
@@ -294,7 +289,6 @@
   :hook ((org-mode . hl-todo-mode)
 	 (org-mode . olivetti-mode)
          (org-mode . org-ai-mode)
-	 (org-mode . org-superstar-mode)
          (org-mode . org-indent-mode))
   :init
   (org-babel-do-load-languages
@@ -314,6 +308,7 @@
   (org-document-info ((t (:family "Roboto Slab" :height 110 :weight medium))))
 
   :custom
+  (org-auto-align-tags t)
   (org-hidden-keywords '(title author date startup))
   (org-startup-folded nil)
   (org-hide-leading-stars t)
@@ -322,9 +317,13 @@
   (org-level-color-stars-only nil)
 
   (org-todo-keywords
-   `((sequence "PAUSED(p)" "TODO(t)" "IN PROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)")))
+   `((sequence "BACKLOG(b)" "BLOCKED(l)" "TODO(t)" "IN PROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)")))
 
   (org-confirm-babel-evaluate nil))
+
+(use-package ox-hugo
+  :ensure t
+  :after ox)
 
 (use-package paredit
   :ensure t
