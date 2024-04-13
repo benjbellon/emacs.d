@@ -325,6 +325,16 @@
 
   (org-confirm-babel-evaluate nil))
 
+(use-package org-superstar
+  :ensure t
+  :after org
+  :hook (org-mode . org-superstar-mode)
+  :init
+  (setq org-superstar-headline-bullets-list '("◉" "○" "◉" "○" "◉"))
+  (setq org-superstar-special-todo-items t)
+  (setq org-superstar-prettify-item-bullets t)
+  (setq org-superstar-item-bullet-alist '((?* . ?*) (?+ . ?◦) (?- . ?•))))
+
 (use-package ox-hugo
   :ensure t
   :after ox)
