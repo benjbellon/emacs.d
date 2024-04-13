@@ -161,6 +161,7 @@
   :after lsp-mode
   :ensure t
   :hook ((go-mode . lsp-mode)
+	 (python-mode . lsp)
 	 (before-save . lsp-format-buffer)
 	 (before-save . lsp-organize-imports)))
 
@@ -265,8 +266,11 @@
 (use-package org-ai
   :after password-store
   :ensure t
+  :bind (("C-c M-a h" . 'org-ai-prompt))
   :init
-  (setq org-ai-openai-api-token (password-store-get "openai/api-key")))
+  (org-ai-global-mode)
+  (setq org-ai-openai-api-token (password-store-get "openai/api-key"))
+  (setq org-ai-default-chat-model "gpt-4-turbo-preview"))
 
 (use-package org-journal
   :ensure t
@@ -277,7 +281,7 @@
   (setq org-journal-enable-agenda-integration t))
 
 (use-package org-mode
-  :after (:all org-ai org-journal)
+  :after (:all org-ai org-journal ob-restclient)
   :mode "\\.org$"
   :bind (:prefix-map org-commands
 		     :prefix-docstring "Org mode quick commands"
@@ -317,7 +321,7 @@
   (org-level-color-stars-only nil)
 
   (org-todo-keywords
-   `((sequence "BACKLOG(b)" "BLOCKED(l)" "TODO(t)" "IN PROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)")))
+   `((sequence "BACKLOG(b)" "BLOCKED(l)" "TODO(t)" "IN_PROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)")))
 
   (org-confirm-babel-evaluate nil))
 
