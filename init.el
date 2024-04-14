@@ -210,6 +210,34 @@
   :init
   (marginalia-mode))
 
+(use-package message
+  :after smtpmail-multi
+  :init
+  (defun get-mail-accounts ()
+    (let* ((raw-keys (auth-source-pass-get 'secret "emacs/mail-accounts"))
+	   (keys (if (null raw-keys) nil (mapcar 'intern (split-string raw-keys)))))
+      (if (null keys)
+          (message "No mail accounts were found in the password-store. Cannot send mail")
+	(mapcar (lambda (x)
+                  (let ((store-name (auth-source-pass-get (symbol-name x) "emacs/mail-accounts")))
+                    (cons x (list
+                             ;; see smtpmail-multi.el for ordering
+                             (auth-source-pass-get "user" store-name) ;; username
+                             (auth-source-pass-get "host" store-name) ;; server
+                             (string-to-number (auth-source-pass-get "port" store-name)) ;; port
+                             (auth-source-pass-get "user" store-name) ;; from
+                             (intern (auth-source-pass-get "type" store-name)) ;; stream type
+                             nil nil nil)))) ;; starttls_key starttls_cert local_host
+		keys))))
+
+  (setq send-mail-function 'smtpmail-multi-send-it
+	mail-accounts (get-mail-accounts)
+	primary-account (nth 0 (car mail-accounts))
+
+	smtpmail-multi-accounts mail-accounts
+	smtpmail-multi-default-account primary-account
+	user-mail-address (nth 3 (cdr (assoc primary-account smtpmail-multi-accounts)))))
+
 (use-package multiple-cursors
   :ensure t
   :init
@@ -217,12 +245,12 @@
   :bind (:prefix-map mc-commands
 		     :prefix-docstring "Multiple cursors quick commands"
 		     :prefix "C-c m"
-	 ("i" . 'mc/insert-numbers)
-	 ("l" . 'mc/edit-lines)
-	 ("m" . 'mc/mark-all-like-this)
-	 ("n" . 'mc/mark-next-like-this)
-	 ("p" . 'mc/mark-previous-like-this)
-	 ("r r" . 'mc/mark-all-in-region-regexp)))
+		     ("i" . 'mc/insert-numbers)
+		     ("l" . 'mc/edit-lines)
+		     ("m" . 'mc/mark-all-like-this)
+		     ("n" . 'mc/mark-next-like-this)
+		     ("p" . 'mc/mark-previous-like-this)
+		     ("r r" . 'mc/mark-all-in-region-regexp)))
 
 (use-package nerd-icons
   :ensure t
@@ -339,6 +367,9 @@
   :ensure t
   :after ox)
 
+(use-package pass
+  :ensure t)
+
 (use-package paredit
   :ensure t
   :hook
@@ -346,7 +377,10 @@
   (emacs-lisp-mode . paredit-mode))
 
 (use-package password-store
-  :ensure t)
+  :ensure t
+  :config
+  ;; don't append, since we /only/ want password-store based credentials
+  (setq auth-sources '(password-store)))
 
 (use-package pest-mode
   :ensure t)
@@ -365,6 +399,9 @@
   :ensure t)
 
 (use-package rustic
+  :ensure t)
+
+(use-package smtpmail-multi
   :ensure t)
 
 (use-package treemacs
