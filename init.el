@@ -182,10 +182,21 @@
 (use-package flycheck
   :ensure t)
 
+(use-package gptel
+  :ensure t
+  :bind (:prefix-map ai-commands
+		     :prefix-docstring "Emacs AI comamands"
+		     :prefix "C-c a"
+		     ("a" . 'gptel)
+		     ("s" . 'gptel-menu))
+  :init
+  (setq gptel-model "gpt-4-turbo-preview"
+	gptel-default-mode #'org-mode))
+
 (use-package hl-todo
   :ensure t
   :init
-    (global-hl-todo-mode))
+  (global-hl-todo-mode))
 
 (use-package jinx
   :ensure t
@@ -214,29 +225,32 @@
   :after smtpmail-multi
   :init
   (defun get-mail-accounts ()
-    (let* ((raw-keys (auth-source-pass-get 'secret "emacs/mail-accounts"))
-	   (keys (if (null raw-keys) nil (mapcar 'intern (split-string raw-keys)))))
-      (if (null keys)
+    (let* ((entries (auth-source-pass-parse-entry "emacs/mail-accounts"))
+	   (accounts (if (null entries) nil (seq-filter (lambda (pair) (not (equal (car pair) 'secret))) entries))))
+      (if (null accounts)
           (message "No mail accounts were found in the password-store. Cannot send mail")
-	(mapcar (lambda (x)
-                  (let ((store-name (auth-source-pass-get (symbol-name x) "emacs/mail-accounts")))
-                    (cons x (list
-                             ;; see smtpmail-multi.el for ordering
-                             (auth-source-pass-get "user" store-name) ;; username
-                             (auth-source-pass-get "host" store-name) ;; server
-                             (string-to-number (auth-source-pass-get "port" store-name)) ;; port
-                             (auth-source-pass-get "user" store-name) ;; from
-                             (intern (auth-source-pass-get "type" store-name)) ;; stream type
-                             nil nil nil)))) ;; starttls_key starttls_cert local_host
-		keys))))
+	(mapcar (lambda (pair)
+		  (let ((key (intern (car pair)))
+			(value ((lambda (account)
+				  (let ((store (auth-source-pass-parse-entry account)))
+				    `(,(assoc-default "user" store)
+				      ,(assoc-default "host" store)
+				      ,(string-to-number (assoc-default "port" store))
+				      ,(assoc-default "user" store)
+				      ,(intern (assoc-default "type" store))
+				      nil nil nil
+				      )))
+				(cdr pair))))
+		    (cons key value)))
+		accounts))))
 
   (setq send-mail-function 'smtpmail-multi-send-it
 	mail-accounts (get-mail-accounts)
 	primary-account (nth 0 (car mail-accounts))
-
 	smtpmail-multi-accounts mail-accounts
 	smtpmail-multi-default-account primary-account
-	user-mail-address (nth 3 (cdr (assoc primary-account smtpmail-multi-accounts)))))
+	user-mail-address (nth 3 (cdr (assoc primary-account smtpmail-multi-accounts)))
+	smtpmail-multi-associations (mapcar (lambda (pair) `(,(car (cdr pair)) ,(car pair))) mail-accounts)))
 
 (use-package multiple-cursors
   :ensure t
