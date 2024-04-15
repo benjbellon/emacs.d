@@ -51,12 +51,14 @@
 	`(("." .  ,(expand-file-name (concat user-emacs-directory "backups")))))
   (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
-
   ;; Custom load paths, files, and directories
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (setq templates-dir (expand-file-name "templates" user-emacs-directory))
   (setq org-dir (expand-file-name "~/.org"))
   (setq org-dir-journal (expand-file-name "journal" org-dir))
+
+  ;; get rid of the useles default connection string
+  (setq sql-postgres-login-params nil)
 
   (add-to-list 'load-path templates-dir)
 
@@ -146,6 +148,9 @@
          ("M-g M-g" . 'consult-goto-line))
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
+(use-package emacs-lisp-mode
+  :mode "\\.dir-locals\\.el\\'")
+
 (use-package embark
   :ensure t
   :bind (("C-." . embark-act)))
@@ -188,10 +193,28 @@
 		     :prefix-docstring "Emacs AI comamands"
 		     :prefix "C-c a"
 		     ("a" . 'gptel)
-		     ("s" . 'gptel-menu))
+		     ("s" . 'gptel-menu)
+		     ("RET" . 'gptel-send))
   :init
   (setq gptel-model "gpt-4-turbo-preview"
-	gptel-default-mode #'org-mode))
+	gptel-default-mode #'org-mode)
+  :config
+  (gptel-make-anthropic "anthropic"
+    :stream t
+    :key (auth-source-pass-get 'secret "anthropic.com/api.anthropic.com/apikey"))
+
+  (gptel-make-openai "groq"
+    :host "api.groq.com"
+    :endpoint "/openai/v1/chat/completions"
+    :stream t
+    :key (auth-source-pass-get 'secret "groq.com/api.groq.com/apikey")
+    :models '("mixtral-8x7b-32768"
+	      "gemma-7b-it"
+	      "llama2-70b-4096"))
+
+  (gptel-make-gemini "gemini"
+    :stream t
+    :key (auth-source-pass-get 'secret "google.com/aiplatform.googleapis.com/gemini/apikey")))
 
 (use-package hl-todo
   :ensure t
@@ -311,8 +334,8 @@
   :bind (("C-c M-a h" . 'org-ai-prompt))
   :init
   (org-ai-global-mode)
-  (setq org-ai-openai-api-token (password-store-get "openai/api-key"))
-  (setq org-ai-default-chat-model "gpt-4-turbo-preview"))
+  (setq org-ai-openai-api-token (password-store-get "openai.com/api.openai.com/apikey")
+	org-ai-default-chat-model "gpt-4-turbo-preview"))
 
 (use-package org-journal
   :ensure t
@@ -342,7 +365,8 @@
    '((emacs-lisp . t )
      (python . t)
      (restclient .t )
-     (shell . t)))
+     (shell . t)
+     (sql . t)))
 
   (setq org-ai-image-directory (expand-file-name "org-ai-images/" org-dir))
 
