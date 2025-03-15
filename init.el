@@ -197,7 +197,9 @@
 		     ("RET" . 'gptel-send))
   :init
   (setq gptel-model "gpt-4-turbo-preview"
-	gptel-default-mode #'org-mode)
+	gptel-default-mode #'org-mode
+	gptel-api-key (auth-source-pass-get 'secret "openai.com/api.openai.com/apikey"))
+
   :config
   (gptel-make-anthropic "anthropic"
     :stream t
@@ -231,7 +233,8 @@
 
 (use-package lsp-mode
   :ensure t
-  :commands lsp)
+  :commands lsp
+  :hook (c-mode . lsp))
 
 (use-package magit
   :ensure t
