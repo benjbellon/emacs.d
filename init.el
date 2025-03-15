@@ -169,17 +169,12 @@
       ("l" "Locals window" dap-ui-locals)
       ("s" "Sessions window" dap-ui-sessions)
       ("b" "Breakpoints" dap-ui-breakpoints-list)
-      ("B" "Breakpoints window")
+      ("B" "Breakpoints window" dap-ui-breakpoints)
       ("W" "Show all windows" dap-ui-show-many-windows)
-      ("w" "Hide all windows" dap-ui-hide-many-window)]])
+      ("w" "Hide all windows" dap-ui-hide-many-windows)]])
 
   :ensure t
   :config
-  ;; (dap-mode 1)
-  ;; (dap-ui-mode 1)
-  ;; (dap-tooltip-mode 1)
-  ;; (dap-ui-controls-mode 1)
-
   (require 'dap-lldb)
   (setq dap-lldb-debug-program '("/bin/lldb-dap")))
 
