@@ -234,6 +234,7 @@
 (use-package lsp-mode
   :ensure t
   :commands lsp
+  :bind-keymap ("C-c l" . lsp-command-map)
   :hook (c-mode . lsp))
 
 (use-package magit
