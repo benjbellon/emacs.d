@@ -148,6 +148,41 @@
          ("M-g M-g" . 'consult-goto-line))
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
+(use-package dap-mode
+  :bind (("C-c d" . dap-commands))
+  :config
+  (transient-define-prefix dap-commands ()
+    "DAP mode commands"
+    [["Commands"
+      ("d" "Start debugger" dap-debug)
+      ("n" "Next" dap-next)
+      ("i" "Step In" dap-step-in)
+      ("o" "Step Out" dap-step-out)
+      ("b" "Toggle Breakpoint" dap-breakpoint-toggle)
+      ("c" "Continue" dap-continue)
+      ("u" "DAP UI commands" dap-ui-commands)]])
+
+  (transient-define-prefix dap-ui-commands ()
+    "DAP UI commands"
+    [["Commands"
+      ("r" "Repl window" dap-ui-repl)
+      ("l" "Locals window" dap-ui-locals)
+      ("s" "Sessions window" dap-ui-sessions)
+      ("b" "Breakpoints" dap-ui-breakpoints-list)
+      ("B" "Breakpoints window")
+      ("W" "Show all windows" dap-ui-show-many-windows)
+      ("w" "Hide all windows" dap-ui-hide-many-window)]])
+
+  :ensure t
+  :config
+  ;; (dap-mode 1)
+  ;; (dap-ui-mode 1)
+  ;; (dap-tooltip-mode 1)
+  ;; (dap-ui-controls-mode 1)
+
+  (require 'dap-lldb)
+  (setq dap-lldb-debug-program '("/bin/lldb-dap")))
+
 (use-package emacs-lisp-mode
   :mode "\\.dir-locals\\.el\\'")
 
@@ -448,11 +483,15 @@
 
 (use-package treemacs
   :ensure t
-  :bind (:prefix-map treemacs-commands
-                     :prefix-docstring "Treemacs quick commands"
-                     :prefix "C-c t"
-                     ("T" . 'treemacs)
-	             ("t" . 'treemacs-select-window)))
+  :after transient
+  :bind (("C-c T" . treemacs-dispatch))
+  :config
+  (transient-define-prefix treemacs-dispatch ()
+    "Treemacs command list"
+    [["Commands"
+      ("t" "Toggle treemacs" treemacs)
+      ("s" "Select treemacs window" treemacs-select-window)
+      ("f" "Find file in treemacs" treemacs-find-file)]]))
 
 (use-package treemacs-nerd-icons
   :ensure t
