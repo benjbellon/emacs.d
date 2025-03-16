@@ -123,6 +123,11 @@
 (use-package cargo-mode
   :ensure t)
 
+(use-package cmake-mode
+  :ensure t
+  :mode (("CMakeLists.txt" . cmake-mode)
+         ("\\.cmake\\'" . cmake-mode)))
+
 (use-package company
   :ensure t
   :init
@@ -154,22 +159,23 @@
   (transient-define-prefix dap-commands ()
     "DAP mode commands"
     [["Commands"
-      ("d" "Start debugger" dap-debug)
-      ("n" "Next" dap-next)
-      ("i" "Step In" dap-step-in)
-      ("o" "Step Out" dap-step-out)
       ("b" "Toggle Breakpoint" dap-breakpoint-toggle)
       ("c" "Continue" dap-continue)
+      ("d" "Start debugger" dap-debug)
+      ("i" "Step In" dap-step-in)
+      ("n" "Next" dap-next)
+      ("o" "Step Out" dap-step-out)
+      ("s" "Stop" dap-stop-thread)
       ("u" "DAP UI commands" dap-ui-commands)]])
 
   (transient-define-prefix dap-ui-commands ()
     "DAP UI commands"
     [["Commands"
-      ("r" "Repl window" dap-ui-repl)
-      ("l" "Locals window" dap-ui-locals)
-      ("s" "Sessions window" dap-ui-sessions)
-      ("b" "Breakpoints" dap-ui-breakpoints-list)
       ("B" "Breakpoints window" dap-ui-breakpoints)
+      ("b" "Breakpoints" dap-ui-breakpoints-list)
+      ("l" "Locals window" dap-ui-locals)
+      ("r" "Repl window" dap-ui-repl)
+      ("s" "Sessions window" dap-ui-sessions)
       ("W" "Show all windows" dap-ui-show-many-windows)
       ("w" "Hide all windows" dap-ui-hide-many-windows)]])
 
