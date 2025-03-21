@@ -100,8 +100,7 @@
 	(define-key global-map (kbd quit-command)
 		    (lambda () (interactive)
 		      (delete-other-windows)
-		      (switch-to-buffer "*shell*")))))
-  :hook (before-save . delete-trailing-whitespace))
+		      (switch-to-buffer "*shell*"))))))
 
 (use-package ace-window
   :ensure t
@@ -125,8 +124,7 @@
 
 (use-package cmake-mode
   :ensure t
-  :mode (("CMakeLists.txt" . cmake-mode)
-         ("\\.cmake\\'" . cmake-mode)))
+  :mode "\\CMakeLists\\.txt\\'")
 
 (use-package company
   :ensure t
@@ -232,14 +230,14 @@
 		     ("s" . 'gptel-menu)
 		     ("RET" . 'gptel-send))
   :init
-  (setq gptel-model "gpt-4-turbo-preview"
-	gptel-default-mode #'org-mode
-	gptel-api-key (auth-source-pass-get 'secret "openai.com/api.openai.com/apikey"))
-
-  :config
-  (gptel-make-anthropic "anthropic"
+  (gptel-make-openai "openai"
     :stream t
-    :key (auth-source-pass-get 'secret "anthropic.com/api.anthropic.com/apikey"))
+    :key (auth-source-pass-get 'secret "openai.com/api.openai.com/apikey"))
+
+  (defvar gptel--anthropic
+    (gptel-make-anthropic "anthropic"
+      :stream t
+      :key (auth-source-pass-get 'secret "anthropic.com/api.anthropic.com/apikey")))
 
   (gptel-make-openai "groq"
     :host "api.groq.com"
@@ -252,7 +250,11 @@
 
   (gptel-make-gemini "gemini"
     :stream t
-    :key (auth-source-pass-get 'secret "google.com/aiplatform.googleapis.com/gemini/apikey")))
+    :key (auth-source-pass-get 'secret "google.com/aiplatform.googleapis.com/gemini/apikey"))
+
+  (setq gptel-backend gptel--anthropic
+        gptel-model 'claude-3-7-sonnet-20250219
+	gptel-default-mode #'org-mode))
 
 (use-package hl-todo
   :ensure t
@@ -561,6 +563,11 @@
   :ensure t
   :config
   (which-key-mode 1))
+
+(use-package ws-butler
+  :ensure t
+  :after lsp-mode
+  :hook (lsp-mode . ws-butler-mode))
 
 (use-package yasnippet
   :ensure t
