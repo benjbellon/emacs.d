@@ -239,6 +239,10 @@
       :stream t
       :key (auth-source-pass-get 'secret "anthropic.com/api.anthropic.com/apikey")))
 
+  (gptel-make-deepseek "deepseek"
+    :stream t
+    :key (auth-source-pass-get 'secret "deepseek.com/api.deepseek.com/apikey"))
+
   (gptel-make-openai "groq"
     :host "api.groq.com"
     :endpoint "/openai/v1/chat/completions"
@@ -377,7 +381,7 @@
   :init
   (org-ai-global-mode)
   (setq org-ai-openai-api-token (password-store-get "openai.com/api.openai.com/apikey")
-	org-ai-default-chat-model "gpt-4-turbo-preview"))
+	org-ai-default-chat-model "gpt-4o"))
 
 (use-package org-journal
   :ensure t
@@ -454,7 +458,8 @@
   :ensure t
   :hook
   (lisp-mode . paredit-mode)
-  (emacs-lisp-mode . paredit-mode))
+  (emacs-lisp-mode . paredit-mode)
+  (scheme-mode . paredit-mode))
 
 (use-package password-store
   :ensure t
