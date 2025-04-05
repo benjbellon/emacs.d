@@ -201,6 +201,7 @@
   :ensure t
   :hook ((go-mode . lsp-mode)
 	 (python-mode . lsp)
+	 (c-mode . lsp)
 	 (before-save . lsp-format-buffer)
 	 (before-save . lsp-organize-imports)))
 
@@ -387,8 +388,8 @@
   :ensure t
   :init
   (setq org-journal-dir org-dir-journal)
-  (setq org-journal-file-type 'weekly)
-  (setq org-journal-file-format "%Y%m%d.org")
+  (setq org-journal-file-type 'monthly)
+  (setq org-journal-file-format "%Y-%m.org")
   (setq org-journal-enable-agenda-integration t))
 
 (use-package org-mode
@@ -399,7 +400,7 @@
 		     :prefix "C-c o"
 		     ("j o" . 'org-journal-open-current-journal-file)
 		     ("j n" . 'org-journal-new-entry)
-		     ("j t" . 'org-journal-new-scheduled-entry))
+		     ("j s" . 'org-journal-new-scheduled-entry))
 
   :hook ((org-mode . hl-todo-mode)
 	 (org-mode . olivetti-mode)
@@ -551,7 +552,8 @@
 	 ("\\.js?\\'" . web-mode)
 	 ("\\.ts?\\'" . web-mode))
   :config
-  (setq web-mode-engines-alist '(("svelte" . ".svelte$")))
+  (setq web-mode-engines-alist '(("svelte" . ".svelte$")
+				 ("django" . "\\.html")))
 
   :custom
   (web-mode-code-indent-offset 2)
@@ -560,6 +562,7 @@
   (web-mode-script-padding 2)
   (web-mode-style-padding 2)
   (web-mode-block-padding 2)
+  (apheleia-mode t)
 
   :hook ((web-mode . lsp)
          (web-mode . apheleia-mode)))
@@ -573,6 +576,9 @@
   :ensure t
   :after lsp-mode
   :hook (lsp-mode . ws-butler-mode))
+
+(use-package yaml-mode
+  :ensure t)
 
 (use-package yasnippet
   :ensure t

@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: changelog-entry
+# key: <clog
+# --
+*** `(format-time-string "[%Y-%m-%d %a]")` version ${1:0.0.0}
+:PROPERTIES:
+:tag: ${2:dev}
+:END:
+
+${3:[brief summary of accomplishments (1-2 sentences)]}
+
+*** 🧩 New
+- ${4:something new}
+
+*** 🧪 Improvements
+- ${5:something changed}
+
+*** 🐛 Fixes
+- ${6:something fixed}

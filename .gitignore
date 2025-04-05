@@ -16,6 +16,7 @@ emojis
 ensime
 history
 ido*
+lsp-cache
 metastore_db*
 multisession/
 network-security.data
