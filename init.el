@@ -153,7 +153,12 @@
 
 (use-package dap-mode
   :bind (("C-c d" . dap-commands))
+  :pin melpa
+  :ensure t
   :config
+  (require 'dap-lldb)
+  (setq dap-lldb-debug-program '("/usr/bin/lldb-dap"))
+
   (transient-define-prefix dap-commands ()
     "DAP mode commands"
     [["Commands"
@@ -175,12 +180,7 @@
       ("r" "Repl window" dap-ui-repl)
       ("s" "Sessions window" dap-ui-sessions)
       ("W" "Show all windows" dap-ui-show-many-windows)
-      ("w" "Hide all windows" dap-ui-hide-many-windows)]])
-
-  :ensure t
-  :config
-  (require 'dap-lldb)
-  (setq dap-lldb-debug-program '("/bin/lldb-dap")))
+      ("w" "Hide all windows" dap-ui-hide-many-windows)]]))
 
 (use-package emacs-lisp-mode
   :mode "\\.dir-locals\\.el\\'")
