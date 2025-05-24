@@ -224,42 +224,31 @@
 
 (use-package gptel
   :ensure t
+  :after password-store
   :bind (:prefix-map ai-commands
 		     :prefix-docstring "Emacs AI comamands"
 		     :prefix "C-c a"
 		     ("a" . 'gptel)
 		     ("s" . 'gptel-menu)
 		     ("RET" . 'gptel-send))
-  :init
-  (gptel-make-openai "openai"
+  :custom
+  (gptel-api-key (auth-source-pass-get 'secret "openai.com/api.openai.com/apikey"))
+  
+  :config
+  (gptel-make-anthropic "anthropic"
     :stream t
-    :key (auth-source-pass-get 'secret "openai.com/api.openai.com/apikey"))
-
-  (defvar gptel--anthropic
-    (gptel-make-anthropic "anthropic"
-      :stream t
-      :key (auth-source-pass-get 'secret "anthropic.com/api.anthropic.com/apikey")))
+    :key (auth-source-pass-get 'secret "anthropic.com/api.anthropic.com/apikey"))
 
   (gptel-make-deepseek "deepseek"
     :stream t
     :key (auth-source-pass-get 'secret "deepseek.com/api.deepseek.com/apikey"))
 
-  (gptel-make-openai "groq"
-    :host "api.groq.com"
-    :endpoint "/openai/v1/chat/completions"
-    :stream t
-    :key (auth-source-pass-get 'secret "groq.com/api.groq.com/apikey")
-    :models '("mixtral-8x7b-32768"
-	      "gemma-7b-it"
-	      "llama2-70b-4096"))
-
   (gptel-make-gemini "gemini"
     :stream t
-    :key (auth-source-pass-get 'secret "google.com/aiplatform.googleapis.com/gemini/apikey"))
+    :key (auth-source-pass-get 'secret "google.com/aiplatform.googleapis.com/gemini/apikey")))
 
-  (setq gptel-backend gptel--anthropic
-        gptel-model 'claude-3-7-sonnet-20250219
-	gptel-default-mode #'org-mode))
+(use-package glsl-mode
+  :ensure t)
 
 (use-package hl-todo
   :ensure t
@@ -482,6 +471,9 @@
   :ensure t)
 
 (use-package restclient
+  :ensure t)
+
+(use-package rmsbolt
   :ensure t)
 
 (use-package rustic
