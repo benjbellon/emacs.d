@@ -1,4 +1,4 @@
-;; init.el --- initialize emacs configuration
+;; init.el --- initialize emacs configuration  -*- lexical-binding: t; -*-
 
 ;;; Author: Benj Bellon <benjaminbellon@gmail.com>
 ;;; Maintainer: Benj Bellon <benjaminbellon@gmail.com>
@@ -107,6 +107,13 @@
   :init
   (setq aw-keys '(?a ?s ?d ?e ?f ?g ?h ?j ?k ?l))
   :bind ("C-x o" . 'ace-window))
+
+(use-package aider
+  :ensure t
+  :config
+  (setq aider-args '("--model" "sonnet" "--no-auto-accept-architect" "--no-auto-commits"))
+  (setenv "ANTHROPIC_API_KEY" (auth-source-pass-get 'secret "anthropic.com/api.anthropic.com/apikey"))
+  (aider-magit-setup-transients))
 
 (use-package apheleia
   :ensure t
@@ -224,15 +231,17 @@
 
 (use-package gptel
   :ensure t
-  :after password-store
+  :after (password-store aider)
   :bind (:prefix-map ai-commands
 		     :prefix-docstring "Emacs AI comamands"
 		     :prefix "C-c a"
 		     ("a" . 'gptel)
+		     ("i" . 'aider-transient-menu)
 		     ("s" . 'gptel-menu)
 		     ("RET" . 'gptel-send))
   :custom
   (gptel-api-key (auth-source-pass-get 'secret "openai.com/api.openai.com/apikey"))
+  (gptel-default-mode #'org-mode)
   
   :config
   (gptel-make-anthropic "anthropic"
