@@ -479,6 +479,9 @@
 (use-package projectile-ripgrep
   :ensure t)
 
+(use-package pyvenv
+  :ensure t)
+
 (use-package restclient
   :ensure t)
 
